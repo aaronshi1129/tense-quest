@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tense Quest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            min-height: 100vh;
+        }
+        
+        .game-card {
+            perspective: 1000px;
+            height: 220px;
+        }
+    
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .game-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .timeline {
+            position: relative;
+            height: 120px;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e5e7eb;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        
+        .timeline-label {
+            position: absolute;
+            top: 60%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100px;
+        }
+        
+        .timeline-period {
+            position: absolute;
+            top: 20%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .game-card.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none z-50"></div>
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Game Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-4xl font-extrabold text-white mb-2">Tense Quest</h1>
+            <p class="text-lg text-indigo-100">Master the 12 English tenses in this adventure!</p>
+        </div>
+        
+        <!-- Game Container -->
+        <div class="bg-white rounded-xl shadow-xl p-6 relative overflow-hidden">
+            <!-- Game States -->
+            <div id="start-screen" class="text-center py-10">
+                <div class="mb-8">
+                    <div class="w-32 h-32 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Tense Quest!</h2>
+                    <p class="text-gray-600 mb-6 max-w-lg mx-auto">Challenge yourself to master all 12 English tenses. Choose the correct tense for each situation and earn stars!</p>
+                </div>
+                
+                <!-- Timeline Visualization -->
+                <div class="timeline mb-10">
+                    <div class="timeline-line"></div>
+                    
+                    <!-- Past Marker -->
+                    <div class="timeline-marker bg-green-500" style="left: 25%"></div>
+                    <div class="timeline-period text-green-700" style="left: 25%">Past</div>
+                    
+                    <!-- Present Marker -->
+                    <div class="timeline-marker bg-blue-500" style="left: 50%"></div>
+                    <div class="timeline-period text-blue-700" style="left: 50%">Present</div>
+                    
+                    <!-- Future Marker -->
+                    <div class="timeline-marker bg-purple-500" style="left: 75%"></div>
+                    <div class="timeline-period text-purple-700" style="left: 75%">Future</div>
+                    
+                    <!-- Now Label -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 py-1 rounded-full border border-gray-300 z-10 font-bold text-sm">
+                        NOW
+                    </div>
+                    
+                    <!-- Timeline Labels -->
+                    <div class="timeline-label text-gray-600" style="left: 12.5%">
+                        <span class="text-xs">Simple</span>
+                    </div>
+                    <div class="timeline-label text-gray-600" style="left: 25%">
+                        <span class="text-xs">Continuous</span>
+                    </div>
+                    <div class="timeline-label text-gray-600" style="left: 37.5%">
+                        <span class="text-xs">Perfect</span>
+                    </div>
+                    
+                    <div class="timeline-label text-gray-600" style="left: 62.5%">
+                        <span class="text-xs">Simple</span>
+                    </div>
+                    <div class="timeline-label text-gray-600" style="left: 75%">
+                        <span class="text-xs">Continuous</span>
+                    </div>
+                    <div class="timeline-label text-gray-600" style="left: 87.5%">
+                        <span class="text-xs">Perfect</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h3 class="font-bold text-green-700">Past</h3>
+                        <p class="text-green-600 text-sm">Events that happened before now</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-700">Present</h3>
+                        <p class="text-blue-600 text-sm">Events happening now or regularly</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <h3 class="font-bold text-purple-700">Future</h3>
+                        <p class="text-purple-600 text-sm">Events that will happen later</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center space-x-4">
+                    <button id="start-game" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 btn-hover">
+                        Start Quest
+                    </button>
+                    <button id="reset-progress" class="bg-red-100 hover:bg-red-200 text-red-700 font-bold py-3 px-8 rounded-full transition duration-300 btn-hover">
+                        Reset All Progress
+                    </button>
+                </div>
+            </div>
+            
+            <div id="game-screen" class="hidden">
+                <!-- Progress Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <span class="text-lg font-bold text-indigo-800" id="current-level">Level 1</span>
+                            <span class="mx-2 text-gray-400">/</span>
+                            <span class="text-gray-500">10 Levels</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500 mr-1">★</span>
+                            <span id="score" class="font-bold">0</span>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progress-bar" class="bg-indigo-600 h-3 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- Return to Home Button -->
+                <div class="mb-4">
+                    <button id="return-home" class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Return to Home
+                    </button>
+                </div>
+                
+                <!-- Scenario -->
+                <div class="bg-indigo-50 p-5 rounded-lg mb-6 border-l-4 border-indigo-500">
+                    <h3 class="font-bold text-indigo-800 mb-2">Scenario:</h3>
+                    <p id="scenario" class="text-gray-700"></p>
+                </div>
+                
+                <!-- Tense Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                        <h4 class="font-bold text-gray-700 mb-1">Simple</h4>
+                        <p class="text-xs text-gray-500">Basic actions</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                        <h4 class="font-bold text-gray-700 mb-1">Continuous</h4>
+                        <p class="text-xs text-gray-500">Ongoing actions</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                        <h4 class="font-bold text-gray-700 mb-1">Perfect</h4>
+                        <p class="text-xs text-gray-500">Completed actions</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                        <h4 class="font-bold text-gray-700 mb-1">Perfect Continuous</h4>
+                        <p class="text-xs text-gray-500">Ongoing completed actions</p>
+                    </div>
+                </div>
+                
+                <!-- Tense Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <!-- Past Simple -->
+                    <div class="game-card" data-tense="past-simple">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-green-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-green-200 hover:border-green-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-green-800">Past Simple</h3>
+                                <p class="text-xs text-green-600 mt-1">I walked</p>
+                            </div>
+                            <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Past Simple</h3>
+                                <p class="text-sm text-center">Completed actions in the past</p>
+                                <p class="text-xs mt-2 italic">Example: I walked to school yesterday.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past Continuous -->
+                    <div class="game-card" data-tense="past-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-green-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-green-200 hover:border-green-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-green-800">Past Continuous</h3>
+                                <p class="text-xs text-green-600 mt-1">I was walking</p>
+                            </div>
+                            <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Past Continuous</h3>
+                                <p class="text-sm text-center">Actions in progress at a specific time in the past</p>
+                                <p class="text-xs mt-2 italic">Example: I was walking when it started to rain.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past Perfect -->
+                    <div class="game-card" data-tense="past-perfect">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-green-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-green-200 hover:border-green-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-green-800">Past Perfect</h3>
+                                <p class="text-xs text-green-600 mt-1">I had walked</p>
+                            </div>
+                            <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Past Perfect</h3>
+                                <p class="text-sm text-center">Actions completed before another past action</p>
+                                <p class="text-xs mt-2 italic">Example: I had finished my homework before dinner.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past Perfect Continuous -->
+                    <div class="game-card" data-tense="past-perfect-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-green-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-green-200 hover:border-green-400 cursor-pointer transition-all text-center">
+                                <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-green-800">Past Perfect Continuous</h3>
+                                <p class="text-xs text-green-600 mt-1">I had been walking</p>
+                            </div>
+                            <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2 text-center">Past Perfect Continuous</h3>
+                                <p class="text-sm text-center">Ongoing actions that continued up to another time in the past</p>
+                                <p class="text-xs mt-2 italic">Example: I had been studying for three hours when she called.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Present Simple -->
+                    <div class="game-card" data-tense="present-simple">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-blue-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-blue-200 hover:border-blue-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-blue-800">Present Simple</h3>
+                                <p class="text-xs text-blue-600 mt-1">I walk</p>
+                            </div>
+                            <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Present Simple</h3>
+                                <p class="text-sm text-center">Regular actions, facts, or habits</p>
+                                <p class="text-xs mt-2 italic">Example: I walk to school every day.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Present Continuous -->
+                    <div class="game-card" data-tense="present-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-blue-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-blue-200 hover:border-blue-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-blue-800">Present Continuous</h3>
+                                <p class="text-xs text-blue-600 mt-1">I am walking</p>
+                            </div>
+                            <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Present Continuous</h3>
+                                <p class="text-sm text-center">Actions happening right now</p>
+                                <p class="text-xs mt-2 italic">Example: I am walking to the store right now.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Present Perfect -->
+                    <div class="game-card" data-tense="present-perfect">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-blue-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-blue-200 hover:border-blue-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-blue-800">Present Perfect</h3>
+                                <p class="text-xs text-blue-600 mt-1">I have walked</p>
+                            </div>
+                            <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Present Perfect</h3>
+                                <p class="text-sm text-center">Past actions with present results</p>
+                                <p class="text-xs mt-2 italic">Example: I have walked five miles today.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Present Perfect Continuous -->
+                    <div class="game-card" data-tense="present-perfect-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-blue-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-blue-200 hover:border-blue-400 cursor-pointer transition-all text-center">
+                                <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-blue-800">Present Perfect Continuous</h3>
+                                <p class="text-xs text-blue-600 mt-1">I have been walking</p>
+                            </div>
+                            <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2 text-center">Present Perfect Continuous</h3>
+                                <p class="text-sm text-center">Actions that started in the past and continue to the present</p>
+                                <p class="text-xs mt-2 italic">Example: I have been walking for two hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Simple -->
+                    <div class="game-card" data-tense="future-simple">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-purple-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-purple-200 hover:border-purple-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-purple-800">Future Simple</h3>
+                                <p class="text-xs text-purple-600 mt-1">I will walk</p>
+                            </div>
+                            <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Future Simple</h3>
+                                <p class="text-sm text-center">Actions that will happen in the future</p>
+                                <p class="text-xs mt-2 italic">Example: I will walk to school tomorrow.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Continuous -->
+                    <div class="game-card" data-tense="future-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-purple-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-purple-200 hover:border-purple-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-purple-800">Future Continuous</h3>
+                                <p class="text-xs text-purple-600 mt-1">I will be walking</p>
+                            </div>
+                            <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Future Continuous</h3>
+                                <p class="text-sm text-center">Actions in progress at a specific time in the future</p>
+                                <p class="text-xs mt-2 italic">Example: I will be walking to school at 8 AM tomorrow.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Perfect -->
+                    <div class="game-card" data-tense="future-perfect">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-purple-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-purple-200 hover:border-purple-400 cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-purple-800">Future Perfect</h3>
+                                <p class="text-xs text-purple-600 mt-1">I will have walked</p>
+                            </div>
+                            <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2">Future Perfect</h3>
+                                <p class="text-sm text-center">Actions that will be completed before a specific time in the future</p>
+                                <p class="text-xs mt-2 italic">Example: I will have walked 1000 miles by the end of the year.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Perfect Continuous -->
+                    <div class="game-card" data-tense="future-perfect-continuous">
+                        <div class="card-inner h-full">
+                            <div class="card-front bg-purple-100 rounded-lg p-4 flex flex-col items-center justify-center h-full border-2 border-purple-200 hover:border-purple-400 cursor-pointer transition-all text-center">
+                                <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-purple-800">Future Perfect Continuous</h3>
+                                <p class="text-xs text-purple-600 mt-1">I will have been walking</p>
+                            </div>
+                            <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
+                                <h3 class="font-bold mb-2 text-center">Future Perfect Continuous</h3>
+                                <p class="text-sm text-center">Ongoing actions that will continue up to a specific time in the future</p>
+                                <p class="text-xs mt-2 italic">Example: By next month, I will have been walking daily for a year.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Answer Feedback -->
+                <div id="feedback" class="hidden p-4 rounded-lg mb-6 text-center">
+                    <h3 id="feedback-title" class="text-xl font-bold mb-2"></h3>
+                    <p id="feedback-message" class="mb-4"></p>
+                    <button id="next-question" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 btn-hover">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+            
+            <div id="results-screen" class="hidden text-center py-10">
+                <div class="mb-8">
+                    <div id="trophy-container" class="w-32 h-32 mx-auto mb-6 bg-yellow-100 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Quest Complete!</h2>
+                    <p id="final-score" class="text-gray-600 mb-6"></p>
+                </div>
+                
+                <div class="bg-indigo-50 p-6 rounded-lg mb-8 max-w-md mx-auto">
+                    <h3 class="font-bold text-indigo-800 mb-4">Your Tense Mastery</h3>
+                    <div id="tense-mastery" class="grid grid-cols-3 gap-4">
+                        <!-- Will be filled dynamically -->
+                    </div>
+                </div>
+                
+                <div class="flex justify-center space-x-4">
+                    <button id="restart-game" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 btn-hover">
+                        Play Again
+                    </button>
+                    <button id="return-home-results" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-full transition duration-300 btn-hover">
+                        Return to Home
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-6 text-indigo-200 text-sm flex justify-center items-center">
+            <p class="mr-2">Tense Quest</p>
+            <span class="mx-2">|</span>
+            <a href="https://app.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                Back to AaronShi.cc App</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            const gameState = {
+                currentLevel: 0,
+                maxLevels: 10,
+                score: 0,
+                correctAnswers: 0,
+                tenseMastery: {
+                    'past-simple': 0,
+                    'past-continuous': 0,
+                    'past-perfect': 0,
+                    'past-perfect-continuous': 0,
+                    'present-simple': 0,
+                    'present-continuous': 0,
+                    'present-perfect': 0,
+                    'present-perfect-continuous': 0,
+                    'future-simple': 0,
+                    'future-continuous': 0,
+                    'future-perfect': 0,
+                    'future-perfect-continuous': 0
+                },
+                scenarios: [
+                    {
+                        text: "Sarah _____ her keys yesterday and couldn't get into her apartment.",
+                        correctTense: "past-simple",
+                        correctAnswer: "lost",
+                        explanation: "This is a completed action that happened at a specific time in the past."
+                    },
+                    {
+                        text: "By the time we arrived at the party, most of the guests _____.",
+                        correctTense: "past-perfect",
+                        correctAnswer: "had left",
+                        explanation: "This describes an action that was completed before another action in the past."
+                    },
+                    {
+                        text: "Look at those clouds! It _____ soon.",
+                        correctTense: "future-simple",
+                        correctAnswer: "will rain",
+                        explanation: "This is a prediction about something that will happen in the future."
+                    },
+                    {
+                        text: "I _____ for three hours when you called me yesterday.",
+                        correctTense: "past-continuous",
+                        correctAnswer: "was studying",
+                        explanation: "This describes an action that was in progress at a specific time in the past."
+                    },
+                    {
+                        text: "By next month, they _____ in their new house for a year.",
+                        correctTense: "future-perfect-continuous",
+                        correctAnswer: "will have been living",
+                        explanation: "This describes an ongoing action that will continue up to a specific point in the future."
+                    },
+                    {
+                        text: "She _____ to the gym three times a week.",
+                        correctTense: "present-simple",
+                        correctAnswer: "goes",
+                        explanation: "This describes a regular, habitual action in the present."
+                    },
+                    {
+                        text: "I _____ to finish this project by 5 PM today.",
+                        correctTense: "present-continuous",
+                        correctAnswer: "am trying",
+                        explanation: "This describes an action in progress at the present moment."
+                    },
+                    {
+                        text: "By the time you arrive, I _____ dinner.",
+                        correctTense: "future-perfect",
+                        correctAnswer: "will have prepared",
+                        explanation: "This describes an action that will be completed before a specific time in the future."
+                    },
+                    {
+                        text: "She _____ English for six years now.",
+                        correctTense: "present-perfect-continuous",
+                        correctAnswer: "has been studying",
+                        explanation: "This describes an action that started in the past and continues to the present."
+                    },
+                    {
+                        text: "When I got home, my dog _____ in the garden for hours.",
+                        correctTense: "past-perfect-continuous",
+                        correctAnswer: "had been digging",
+                        explanation: "This describes an ongoing action that continued up to a specific time in the past."
+                    },
+                    {
+                        "text": "They _____ dinner when the phone rang.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "were having",
+                        "explanation": "This describes an action in progress at a specific time in the past."
+                    },
+                    {
+                        "text": "I _____ never _____ such a beautiful sunset before.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have seen",
+                        "explanation": "This describes a life experience up to the present moment."
+                    },
+                    {
+                        "text": "She _____ her homework before dinner yesterday.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had finished",
+                        "explanation": "This describes an action that was completed before another past action."
+                    },
+                    {
+                        "text": "We _____ to Paris next weekend.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will travel",
+                        "explanation": "This is a plan or decision made about the future."
+                    },
+                    {
+                        "text": "I think it _____ snow tonight.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will",
+                        "explanation": "This is a prediction based on opinion."
+                    },
+                    {
+                        "text": "They _____ for a walk when it started to rain.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "were going",
+                        "explanation": "This describes an ongoing past action interrupted by another action."
+                    },
+                    {
+                        "text": "She _____ to the dentist every six months.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "goes",
+                        "explanation": "This describes a habitual or routine action."
+                    },
+                    {
+                        "text": "We _____ this movie three times already.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have seen",
+                        "explanation": "This describes an action that has occurred at an unspecified time in the past and may happen again."
+                    },
+                    {
+                        "text": "By 2026, he _____ his degree.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have earned",
+                        "explanation": "This describes an action that will be completed by a future time."
+                    },
+                    {
+                        "text": "I _____ at this company since 2010.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been working",
+                        "explanation": "This describes an ongoing action that began in the past and continues into the present."
+                    },
+                    {
+                        "text": "They _____ all day before they finally found the right place.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been searching",
+                        "explanation": "This describes a continuous past action that led up to another past action."
+                    },
+                    {
+                        "text": "Right now, she _____ for her final exams.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "is studying",
+                        "explanation": "This describes an action happening at the current moment."
+                    },
+                    {
+                        "text": "By the time you get here, we _____ for over an hour.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been waiting",
+                        "explanation": "This describes a continuous future action up to a point in time."
+                    },
+                    {
+                        "text": "He _____ at the library when I saw him.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was reading",
+                        "explanation": "This describes an action that was in progress at a specific past moment."
+                    },
+                    {
+                        "text": "They _____ a new car recently.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have bought",
+                        "explanation": "This describes a completed action with relevance to the present."
+                    },
+                    {
+                        "text": "I _____ a book when the lights went out.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was reading",
+                        "explanation": "This describes an ongoing action interrupted by another past action."
+                    },
+                    {
+                        "text": "She _____ to move to another city next year.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "is planning",
+                        "explanation": "This describes a future arrangement or plan that has already been decided."
+                    },
+                    {
+                        "text": "They _____ to Spain for their honeymoon next summer.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will go",
+                        "explanation": "This is a planned action in the future."
+                    },
+                    {
+                        "text": "He _____ his leg before the match started.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had injured",
+                        "explanation": "This describes a condition or action completed before another event in the past."
+                    },
+                    {
+                        "text": "By the time I graduate, I _____ this course for four years.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been taking",
+                        "explanation": "This describes an action that will be ongoing up until a future point."
+                    },
+                    {
+                        "text": "He _____ lunch when his friend called.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was eating",
+                        "explanation": "This describes an action that was ongoing in the past when another action occurred."
+                    },
+                    {
+                        "text": "They _____ to Australia last summer.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "traveled",
+                        "explanation": "This describes a completed action at a specific time in the past."
+                    },
+                    {
+                        "text": "I _____ already _____ the book when she recommended it.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had read",
+                        "explanation": "This shows an action that was completed before another past action."
+                    },
+                    {
+                        "text": "She _____ to learn Spanish for a year.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been trying",
+                        "explanation": "This describes an action that began in the past and continues into the present."
+                    },
+                    {
+                        "text": "By the end of this week, I _____ all my assignments.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have completed",
+                        "explanation": "This describes an action that will be finished before a specific point in the future."
+                    },
+                    {
+                        "text": "We _____ for the bus for over thirty minutes.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been waiting",
+                        "explanation": "This describes a continuing action that started in the past and still continues."
+                    },
+                    {
+                        "text": "She usually _____ up at 6 a.m.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "wakes",
+                        "explanation": "This describes a habitual action in the present."
+                    },
+                    {
+                        "text": "He _____ the guitar when he was young.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "played",
+                        "explanation": "This refers to a past habit or completed action."
+                    },
+                    {
+                        "text": "They _____ the house for hours before the guests arrived.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been cleaning",
+                        "explanation": "This shows an ongoing action completed before a past event."
+                    },
+                    {
+                        "text": "I _____ to the new manager tomorrow afternoon.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will talk",
+                        "explanation": "This is a decision or plan for a future action."
+                    },
+                    {
+                        "text": "By next year, she _____ in this city for a decade.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been living",
+                        "explanation": "This expresses an ongoing future action that continues to a certain point."
+                    },
+                    {
+                        "text": "At the moment, I _____ my room.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "am cleaning",
+                        "explanation": "This describes what is happening right now."
+                    },
+                    {
+                        "text": "They _____ a new apartment recently.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have rented",
+                        "explanation": "This refers to a completed action with relevance to the present."
+                    },
+                    {
+                        "text": "I _____ a sandwich right now.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "am eating",
+                        "explanation": "This shows an action currently in progress."
+                    },
+                    {
+                        "text": "We _____ all the invitations by yesterday.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had sent",
+                        "explanation": "This indicates the completion of an action before a specific time in the past."
+                    },
+                    {
+                        "text": "He _____ his leg while playing football last weekend.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "broke",
+                        "explanation": "This is a specific, completed action in the past."
+                    },
+                    {
+                        "text": "I think she _____ the answer.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will know",
+                        "explanation": "This is a prediction about the future."
+                    },
+                    {
+                        "text": "They _____ this road for months before it was finally finished.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been repairing",
+                        "explanation": "This refers to a long past action leading up to another past event."
+                    },
+                    {
+                        "text": "She _____ very hard for the competition lately.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been training",
+                        "explanation": "This shows an action started in the past and still ongoing."
+                    },
+                    {
+                        "text": "By the time we reach the airport, the plane _____ off.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have taken",
+                        "explanation": "This refers to a future action completed before another future point."
+                    },
+                    {
+                        "text": "He usually _____ his car on Sundays.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "washes",
+                        "explanation": "This describes a regular or habitual action."
+                    },
+                    {
+                        "text": "I _____ the news when the power went out.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was watching",
+                        "explanation": "This is an action in progress that was interrupted by another past event."
+                    },
+                    {
+                        "text": "She _____ all night before the big exam.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been studying",
+                        "explanation": "This shows a past action that continued up to another past moment."
+                    },
+                    {
+                        "text": "They _____ to build a new school next year.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "are planning",
+                        "explanation": "This expresses a near-future arrangement."
+                    },
+                    {
+                        "text": "By 8 p.m., I _____ my workout.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have finished",
+                        "explanation": "This shows a future action that will be completed before a specific time."
+                    },
+                    {
+                        "text": "I _____ him before he moved abroad.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had met",
+                        "explanation": "This describes an action completed before another action in the past."
+                    },
+                    {
+                        "text": "Look! That dog _____ your sandwich!",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "is eating",
+                        "explanation": "This describes an action happening at this very moment."
+                    },
+                    {
+                        "text": "He _____ his leg before the trip, so he couldn't go.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had injured",
+                        "explanation": "This describes a condition that existed before another past event."
+                    },
+                    {
+                        "text": "They _____ to Italy next month.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will travel",
+                        "explanation": "This is a decision or prediction about a future action."
+                    },
+                    {
+                        "text": "She _____ five books so far this year.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has read",
+                        "explanation": "This shows a completed action with relevance to the present."
+                    },
+                    {
+                        "text": "At this time tomorrow, I _____ on the beach.",
+                        "correctTense": "future-continuous",
+                        "correctAnswer": "will be lying",
+                        "explanation": "This describes an action that will be in progress at a specific future time."
+                    },
+                    {
+                        "text": "We _____ at this restaurant every Friday.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "eat",
+                        "explanation": "This is a habitual action or routine."
+                    },
+                    {
+                        "text": "He _____ a lot of progress lately.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has made",
+                        "explanation": "This action started in the past and is relevant to the present."
+                    },
+                    {
+                        "text": "They _____ for hours when the coach finally arrived.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been waiting",
+                        "explanation": "This expresses a past action that was ongoing before another past event."
+                    },
+                    {
+                        "text": "I _____ to call you yesterday, but I forgot.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "meant",
+                        "explanation": "This is a completed action that occurred at a specific past time."
+                    },
+                    {
+                        "text": "By the time the guests come, she _____ everything ready.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have prepared",
+                        "explanation": "This describes an action that will be finished before a specific future event."
+                    },
+                    {
+                        "text": "We _____ for this event for months.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been preparing",
+                        "explanation": "This shows an action started in the past and continuing into the present."
+                    },
+                    {
+                        "text": "He _____ already _____ when I got there.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had left",
+                        "explanation": "This describes an action that was completed before another action in the past."
+                    },
+                    {
+                        "text": "She _____ her keys again!",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has lost",
+                        "explanation": "This describes a recent action with present consequences."
+                    },
+                    {
+                        "text": "They _____ to call us if there’s a delay.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will remember",
+                        "explanation": "This is a promise or prediction about the future."
+                    },
+                    {
+                        "text": "She _____ a letter when the phone rang.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was writing",
+                        "explanation": "This is an action that was in progress when another past event interrupted it."
+                    },
+                    {
+                        "text": "They _____ a new product next quarter.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will launch",
+                        "explanation": "This describes a planned or predicted action in the future."
+                    },
+                    {
+                        "text": "I _____ this movie three times already.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have seen",
+                        "explanation": "This refers to an experience up to the present."
+                    },
+                    {
+                        "text": "By next summer, we _____ here for five years.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been living",
+                        "explanation": "This is an ongoing action continuing up to a future point."
+                    },
+                    {
+                        "text": "He _____ a lot of coffee lately.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been drinking",
+                        "explanation": "This shows an action that started in the past and is still happening."
+                    },
+                    {
+                        "text": "We _____ the documents before the deadline.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had submitted",
+                        "explanation": "This indicates completion of an action before a past moment."
+                    },
+                    {
+                        "text": "Right now, the kids _____ in the garden.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "are playing",
+                        "explanation": "This describes an action happening at the present moment."
+                    },
+                    {
+                        "text": "She _____ for that company in 2015.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "worked",
+                        "explanation": "This is a completed action at a specific time in the past."
+                    },
+                    {
+                        "text": "We _____ for you at the station tomorrow at 6 p.m.",
+                        "correctTense": "future-continuous",
+                        "correctAnswer": "will be waiting",
+                        "explanation": "This describes an action in progress at a specific time in the future."
+                    },
+                    {
+                        "text": "I _____ my homework yet.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "haven’t finished",
+                        "explanation": "This refers to an action that has not yet been completed up to now."
+                    },
+                    {
+                        "text": "They _____ their tickets before arriving at the airport.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had printed",
+                        "explanation": "This is a completed action before another past event."
+                    },
+                    {
+                        "text": "He _____ to be more careful in the future.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will try",
+                        "explanation": "This expresses a promise or intention about the future."
+                    },
+                    {
+                        "text": "She _____ to the gym every day last month.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "went",
+                        "explanation": "This describes a repeated action in the past."
+                    },
+                    {
+                        "text": "By the end of this year, I _____ all my exams.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have passed",
+                        "explanation": "This action will be completed before a certain time in the future."
+                    },
+                    {
+                        "text": "They _____ to decorate the room for hours before the party.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been trying",
+                        "explanation": "This shows continuous effort leading up to a past point."
+                    },
+                    {
+                        "text": "He _____ for a walk every morning.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "goes",
+                        "explanation": "This describes a daily routine."
+                    },
+                    {
+                        "text": "I _____ lunch when you called.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was having",
+                        "explanation": "This is an action in progress interrupted by another past action."
+                    },
+                    {
+                        "text": "We _____ a lot about climate change lately.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been hearing",
+                        "explanation": "This describes a recent and ongoing situation."
+                    },
+                    {
+                        "text": "She _____ him before the meeting started.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had called",
+                        "explanation": "This shows a completed action before a past event."
+                    },
+                    {
+                        "text": "By this time next week, we _____ our vacation.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have started",
+                        "explanation": "This action will be completed by a specific time in the future."
+                    }
+                ]
+            };
+            
+            // DOM elements
+            const startScreen = document.getElementById('start-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const resultsScreen = document.getElementById('results-screen');
+            const startGameBtn = document.getElementById('start-game');
+            const nextQuestionBtn = document.getElementById('next-question');
+            const restartGameBtn = document.getElementById('restart-game');
+            const returnHomeBtn = document.getElementById('return-home');
+            const returnHomeResultsBtn = document.getElementById('return-home-results');
+            const resetProgressBtn = document.getElementById('reset-progress');
+            const progressBar = document.getElementById('progress-bar');
+            const currentLevelEl = document.getElementById('current-level');
+            const scoreEl = document.getElementById('score');
+            const scenarioEl = document.getElementById('scenario');
+            const feedbackEl = document.getElementById('feedback');
+            const feedbackTitleEl = document.getElementById('feedback-title');
+            const feedbackMessageEl = document.getElementById('feedback-message');
+            const finalScoreEl = document.getElementById('final-score');
+            const tenseMasteryEl = document.getElementById('tense-mastery');
+            const gameCards = document.querySelectorAll('.game-card');
+            const confettiContainer = document.getElementById('confetti-container');
+            
+            // Local Storage Keys
+            const STORAGE_KEY = 'tenseQuestProgress';
+            
+            // Flag to track if a card is currently flipped
+            let isCardFlipped = false;
+            
+            // Initialize card flipping
+            gameCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // If feedback is showing or another card is already flipped, don't allow flipping
+                    if (!feedbackEl.classList.contains('hidden') || isCardFlipped) {
+                        return;
+                    }
+                    
+                    // Set the flag to prevent other cards from flipping
+                    isCardFlipped = true;
+                    
+                    // Add disabled class to all cards
+                    gameCards.forEach(c => {
+                        if (c !== card) {
+                            c.classList.add('disabled');
+                        }
+                    });
+                    
+                    // Flip the card
+                    card.classList.add('flipped');
+                    
+                    // Check answer after a delay
+                    setTimeout(() => {
+                        checkAnswer(card.dataset.tense);
+                        card.classList.remove('flipped');
+                        
+                        // Reset the flag and remove disabled class from all cards
+                        setTimeout(() => {
+                            isCardFlipped = false;
+                            gameCards.forEach(c => {
+                                c.classList.remove('disabled');
+                            });
+                        }, 300); // Small delay after flip back
+                    }, 1500);
+                });
+            });
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Event listeners
+            startGameBtn.addEventListener('click', startGame);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            restartGameBtn.addEventListener('click', restartGame);
+            returnHomeBtn.addEventListener('click', returnToHome);
+            returnHomeResultsBtn.addEventListener('click', returnToHome);
+            resetProgressBtn.addEventListener('click', resetProgress);
+            
+            function startGame() {
+                startScreen.classList.add('hidden');
+                gameScreen.classList.remove('hidden');
+                loadQuestion();
+            }
+            
+            function loadQuestion() {
+                const scenario = gameState.scenarios[gameState.currentLevel];
+                scenarioEl.textContent = scenario.text;
+                currentLevelEl.textContent = `Level ${gameState.currentLevel + 1}`;
+                progressBar.style.width = `${(gameState.currentLevel / gameState.maxLevels) * 100}%`;
+                feedbackEl.classList.add('hidden');
+                
+                // Save progress
+                saveProgress();
+            }
+            
+            function checkAnswer(selectedTense) {
+                const scenario = gameState.scenarios[gameState.currentLevel];
+                const isCorrect = selectedTense === scenario.correctTense;
+                
+                feedbackEl.classList.remove('hidden');
+                
+                if (isCorrect) {
+                    feedbackEl.className = 'bg-green-100 p-4 rounded-lg mb-6 text-center';
+                    feedbackTitleEl.textContent = '✅ Correct!';
+                    feedbackTitleEl.className = 'text-xl font-bold mb-2 text-green-800';
+                    gameState.score += 10;
+                    gameState.correctAnswers++;
+                    gameState.tenseMastery[selectedTense]++;
+                    scoreEl.textContent = gameState.score;
+                    createConfetti();
+                } else {
+                    feedbackEl.className = 'bg-red-100 p-4 rounded-lg mb-6 text-center';
+                    feedbackTitleEl.textContent = '❌ Not quite right';
+                    feedbackTitleEl.className = 'text-xl font-bold mb-2 text-red-800';
+                }
+                
+                feedbackMessageEl.innerHTML = `
+                    <p class="mb-2">The correct answer is: <strong>${scenario.correctTense.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</strong></p>
+                    <p class="mb-2">Example: <em>"${scenario.correctAnswer}"</em></p>
+                    <p>${scenario.explanation}</p>
+                `;
+                
+                // Save progress
+                saveProgress();
+            }
+            
+            function nextQuestion() {
+                gameState.currentLevel++;
+                
+                if (gameState.currentLevel >= gameState.maxLevels) {
+                    showResults();
+                } else {
+                    loadQuestion();
+                }
+            }
+            
+            function showResults() {
+                gameScreen.classList.add('hidden');
+                resultsScreen.classList.remove('hidden');
+                
+                const accuracy = Math.round((gameState.correctAnswers / gameState.maxLevels) * 100);
+                finalScoreEl.textContent = `You scored ${gameState.score} points with ${accuracy}% accuracy!`;
+                
+                // Display tense mastery
+                tenseMasteryEl.innerHTML = '';
+                
+                const tenseGroups = {
+                    'Past': ['past-simple', 'past-continuous', 'past-perfect', 'past-perfect-continuous'],
+                    'Present': ['present-simple', 'present-continuous', 'present-perfect', 'present-perfect-continuous'],
+                    'Future': ['future-simple', 'future-continuous', 'future-perfect', 'future-perfect-continuous']
+                };
+                
+                for (const [group, tenses] of Object.entries(tenseGroups)) {
+                    const groupEl = document.createElement('div');
+                    groupEl.className = 'mb-3';
+                    
+                    const groupTitle = document.createElement('h4');
+                    groupTitle.className = 'font-bold text-indigo-800 mb-1';
+                    groupTitle.textContent = group;
+                    groupEl.appendChild(groupTitle);
+                    
+                    const tenseList = document.createElement('div');
+                    tenseList.className = 'text-sm';
+                    
+                    tenses.forEach(tense => {
+                        const mastery = gameState.tenseMastery[tense];
+                        // Format the tense name properly
+                        let tenseName = '';
+                        const parts = tense.split('-');
+                        
+                        // Handle the special case of Perfect Continuous tenses
+                        if (parts.includes('perfect') && parts.includes('continuous')) {
+                            tenseName = 'Perfect Continuous';
+                        } else {
+                            tenseName = parts.slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                        }
+                        
+                        const tenseItem = document.createElement('div');
+                        tenseItem.className = 'flex items-center justify-between mb-1';
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = tenseName;
+                        
+                        const starsSpan = document.createElement('span');
+                        starsSpan.className = 'text-yellow-500';
+                        starsSpan.textContent = mastery > 0 ? '★' : '☆';
+                        
+                        tenseItem.appendChild(nameSpan);
+                        tenseItem.appendChild(starsSpan);
+                        tenseList.appendChild(tenseItem);
+                    });
+                    
+                    groupEl.appendChild(tenseList);
+                    tenseMasteryEl.appendChild(groupEl);
+                }
+                
+                if (accuracy > 70) {
+                    createVictoryConfetti();
+                }
+                
+                // Save progress
+                saveProgress();
+            }
+            
+            function restartGame() {
+                // Reset game state
+                gameState.currentLevel = 0;
+                gameState.score = 0;
+                gameState.correctAnswers = 0;
+                
+                for (const tense in gameState.tenseMastery) {
+                    gameState.tenseMastery[tense] = 0;
+                }
+                
+                // Shuffle scenarios
+                gameState.scenarios.sort(() => Math.random() - 0.5);
+                
+                // Update UI
+                scoreEl.textContent = '0';
+                progressBar.style.width = '0%';
+                
+                // Show game screen
+                resultsScreen.classList.add('hidden');
+                gameScreen.classList.remove('hidden');
+                
+                // Load first question
+                loadQuestion();
+                
+                // Save progress
+                saveProgress();
+            }
+            
+            function returnToHome() {
+                gameScreen.classList.add('hidden');
+                resultsScreen.classList.add('hidden');
+                startScreen.classList.remove('hidden');
+                
+                // Save progress
+                saveProgress();
+            }
+            
+            function resetProgress() {
+                if (confirm("Are you sure you want to reset all progress? This cannot be undone.")) {
+                    // Reset game state
+                    gameState.currentLevel = 0;
+                    gameState.score = 0;
+                    gameState.correctAnswers = 0;
+                    
+                    for (const tense in gameState.tenseMastery) {
+                        gameState.tenseMastery[tense] = 0;
+                    }
+                    
+                    // Shuffle scenarios
+                    gameState.scenarios.sort(() => Math.random() - 0.5);
+                    
+                    // Clear local storage
+                    localStorage.removeItem(STORAGE_KEY);
+                    
+                    // Update UI
+                    scoreEl.textContent = '0';
+                    progressBar.style.width = '0%';
+                    
+                    alert("All progress has been reset!");
+                }
+            }
+            
+            function saveProgress() {
+                const progressData = {
+                    currentLevel: gameState.currentLevel,
+                    score: gameState.score,
+                    correctAnswers: gameState.correctAnswers,
+                    tenseMastery: gameState.tenseMastery,
+                    scenarios: gameState.scenarios
+                };
+                
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(progressData));
+            }
+            
+            function loadProgress() {
+                const savedProgress = localStorage.getItem(STORAGE_KEY);
+                
+                if (savedProgress) {
+                    const progressData = JSON.parse(savedProgress);
+                    
+                    gameState.currentLevel = progressData.currentLevel;
+                    gameState.score = progressData.score;
+                    gameState.correctAnswers = progressData.correctAnswers;
+                    gameState.tenseMastery = progressData.tenseMastery;
+                    gameState.scenarios = progressData.scenarios;
+                    
+                    scoreEl.textContent = gameState.score;
+                }
+            }
+            
+            function createConfetti() {
+                const colors = ['#FFC700', '#FF0058', '#2BD1FC', '#F19CBB', '#C04CFD'];
+                
+                for (let i = 0; i < 30; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.opacity = Math.random();
+                    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                    
+                    confettiContainer.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }
+            }
+            
+            function createVictoryConfetti() {
+                const colors = ['#FFC700', '#FF0058', '#2BD1FC', '#F19CBB', '#C04CFD', '#00C2A8', '#FFD700'];
+                
+                for (let i = 0; i < 100; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + '%';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.width = Math.random() * 12 + 5 + 'px';
+                        confetti.style.height = Math.random() * 12 + 5 + 'px';
+                        confetti.style.opacity = Math.random();
+                        confetti.style.animation = `fall ${Math.random() * 5 + 3}s linear forwards`;
+                        
+                        confettiContainer.appendChild(confetti);
+                        
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, 8000);
+                    }, i * 50);
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cf5f5835ce4a1c',t:'MTc0Njc3NDU3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
