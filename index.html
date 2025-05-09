@@ -18,7 +18,7 @@
             perspective: 1000px;
             height: 220px;
         }
-    
+        
         .card-inner {
             transition: transform 0.6s;
             transform-style: preserve-3d;
@@ -114,6 +114,12 @@
             pointer-events: none;
             opacity: 0.7;
         }
+
+        .verb-form {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body class="p-4">
@@ -203,7 +209,7 @@
                         Start Quest
                     </button>
                     <button id="reset-progress" class="bg-red-100 hover:bg-red-200 text-red-700 font-bold py-3 px-8 rounded-full transition duration-300 btn-hover">
-                        Reset All Progress
+                        Reset Progress
                     </button>
                 </div>
             </div>
@@ -275,7 +281,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-green-800">Past Simple</h3>
-                                <p class="text-xs text-green-600 mt-1">I walked</p>
+                                <div class="verb-form text-green-600" id="past-simple-form">walked</div>
                             </div>
                             <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Past Simple</h3>
@@ -295,7 +301,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-green-800">Past Continuous</h3>
-                                <p class="text-xs text-green-600 mt-1">I was walking</p>
+                                <div class="verb-form text-green-600" id="past-continuous-form">was/were walking</div>
                             </div>
                             <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Past Continuous</h3>
@@ -315,7 +321,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-green-800">Past Perfect</h3>
-                                <p class="text-xs text-green-600 mt-1">I had walked</p>
+                                <div class="verb-form text-green-600" id="past-perfect-form">had walked</div>
                             </div>
                             <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Past Perfect</h3>
@@ -335,7 +341,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-green-800">Past Perfect Continuous</h3>
-                                <p class="text-xs text-green-600 mt-1">I had been walking</p>
+                                <div class="verb-form text-green-600" id="past-perfect-continuous-form">had been walking</div>
                             </div>
                             <div class="card-back bg-green-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2 text-center">Past Perfect Continuous</h3>
@@ -355,7 +361,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-blue-800">Present Simple</h3>
-                                <p class="text-xs text-blue-600 mt-1">I walk</p>
+                                <div class="verb-form text-blue-600" id="present-simple-form">walk/walks</div>
                             </div>
                             <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Present Simple</h3>
@@ -375,7 +381,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-blue-800">Present Continuous</h3>
-                                <p class="text-xs text-blue-600 mt-1">I am walking</p>
+                                <div class="verb-form text-blue-600" id="present-continuous-form">am/is/are walking</div>
                             </div>
                             <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Present Continuous</h3>
@@ -395,7 +401,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-blue-800">Present Perfect</h3>
-                                <p class="text-xs text-blue-600 mt-1">I have walked</p>
+                                <div class="verb-form text-blue-600" id="present-perfect-form">have/has walked</div>
                             </div>
                             <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Present Perfect</h3>
@@ -415,7 +421,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-blue-800">Present Perfect Continuous</h3>
-                                <p class="text-xs text-blue-600 mt-1">I have been walking</p>
+                                <div class="verb-form text-blue-600" id="present-perfect-continuous-form">have/has been walking</div>
                             </div>
                             <div class="card-back bg-blue-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2 text-center">Present Perfect Continuous</h3>
@@ -435,7 +441,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-purple-800">Future Simple</h3>
-                                <p class="text-xs text-purple-600 mt-1">I will walk</p>
+                                <div class="verb-form text-purple-600" id="future-simple-form">will walk</div>
                             </div>
                             <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Future Simple</h3>
@@ -455,7 +461,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-purple-800">Future Continuous</h3>
-                                <p class="text-xs text-purple-600 mt-1">I will be walking</p>
+                                <div class="verb-form text-purple-600" id="future-continuous-form">will be walking</div>
                             </div>
                             <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Future Continuous</h3>
@@ -475,7 +481,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-purple-800">Future Perfect</h3>
-                                <p class="text-xs text-purple-600 mt-1">I will have walked</p>
+                                <div class="verb-form text-purple-600" id="future-perfect-form">will have walked</div>
                             </div>
                             <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2">Future Perfect</h3>
@@ -495,7 +501,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="font-bold text-purple-800">Future Perfect Continuous</h3>
-                                <p class="text-xs text-purple-600 mt-1">I will have been walking</p>
+                                <div class="verb-form text-purple-600" id="future-perfect-continuous-form">will have been walking</div>
                             </div>
                             <div class="card-back bg-purple-600 text-white rounded-lg p-4 flex flex-col items-center justify-center h-full">
                                 <h3 class="font-bold mb-2 text-center">Future Perfect Continuous</h3>
@@ -547,10 +553,12 @@
         
         <!-- Footer -->
         <div class="text-center mt-6 text-indigo-200 text-sm flex justify-center items-center">
-            <p class="mr-2">Tense Quest</p>
+            <p class="mr-2"><a href="https://app.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                Go to AaronShi.cc</a></p>
             <span class="mx-2">|</span>
             <a href="https://app.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
-                Back to AaronShi.cc App</a>
+                Back to AaronShi.cc App
+            </a>
         </div>
     </div>
 
@@ -562,6 +570,7 @@
                 maxLevels: 10,
                 score: 0,
                 correctAnswers: 0,
+                selectedCard: null,
                 tenseMastery: {
                     'past-simple': 0,
                     'past-continuous': 0,
@@ -581,542 +590,1874 @@
                         text: "Sarah _____ her keys yesterday and couldn't get into her apartment.",
                         correctTense: "past-simple",
                         correctAnswer: "lost",
-                        explanation: "This is a completed action that happened at a specific time in the past."
+                        explanation: "This is a completed action that happened at a specific time in the past.",
+                        "past-simple-option": "lost",
+                        "past-continuous-option": "was losing",
+                        "past-perfect-option": "had lost",
+                        "past-perfect-continuous-option": "had been losing",
+                        "present-simple-option": "loses",
+                        "present-continuous-option": "is losing",
+                        "present-perfect-option": "has lost",
+                        "present-perfect-continuous-option": "has been losing",
+                        "future-simple-option": "will lose",
+                        "future-continuous-option": "will be losing",
+                        "future-perfect-option": "will have lost",
+                        "future-perfect-continuous-option": "will have been losing"
                     },
                     {
                         text: "By the time we arrived at the party, most of the guests _____.",
                         correctTense: "past-perfect",
                         correctAnswer: "had left",
-                        explanation: "This describes an action that was completed before another action in the past."
+                        explanation: "This describes an action that was completed before another action in the past.",
+                        "past-simple-option": "left",
+                        "past-continuous-option": "were leaving",
+                        "past-perfect-option": "had left",
+                        "past-perfect-continuous-option": "had been leaving",
+                        "present-simple-option": "leave",
+                        "present-continuous-option": "are leaving",
+                        "present-perfect-option": "have left",
+                        "present-perfect-continuous-option": "have been leaving",
+                        "future-simple-option": "will leave",
+                        "future-continuous-option": "will be leaving",
+                        "future-perfect-option": "will have left",
+                        "future-perfect-continuous-option": "will have been leaving"
                     },
                     {
                         text: "Look at those clouds! It _____ soon.",
                         correctTense: "future-simple",
                         correctAnswer: "will rain",
-                        explanation: "This is a prediction about something that will happen in the future."
+                        explanation: "This is a prediction about something that will happen in the future.",
+                        "past-simple-option": "rained",
+                        "past-continuous-option": "was raining",
+                        "past-perfect-option": "had rained",
+                        "past-perfect-continuous-option": "had been raining",
+                        "present-simple-option": "rains",
+                        "present-continuous-option": "is raining",
+                        "present-perfect-option": "has rained",
+                        "present-perfect-continuous-option": "has been raining",
+                        "future-simple-option": "will rain",
+                        "future-continuous-option": "will be raining",
+                        "future-perfect-option": "will have rained",
+                        "future-perfect-continuous-option": "will have been raining"
                     },
                     {
                         text: "I _____ for three hours when you called me yesterday.",
                         correctTense: "past-continuous",
                         correctAnswer: "was studying",
-                        explanation: "This describes an action that was in progress at a specific time in the past."
+                        explanation: "This describes an action that was in progress at a specific time in the past.",
+                        "past-simple-option": "studied",
+                        "past-continuous-option": "was studying",
+                        "past-perfect-option": "had studied",
+                        "past-perfect-continuous-option": "had been studying",
+                        "present-simple-option": "study",
+                        "present-continuous-option": "am studying",
+                        "present-perfect-option": "have studied",
+                        "present-perfect-continuous-option": "have been studying",
+                        "future-simple-option": "will study",
+                        "future-continuous-option": "will be studying",
+                        "future-perfect-option": "will have studied",
+                        "future-perfect-continuous-option": "will have been studying"
                     },
                     {
                         text: "By next month, they _____ in their new house for a year.",
                         correctTense: "future-perfect-continuous",
                         correctAnswer: "will have been living",
-                        explanation: "This describes an ongoing action that will continue up to a specific point in the future."
+                        explanation: "This describes an ongoing action that will continue up to a specific point in the future.",
+                        "past-simple-option": "lived",
+                        "past-continuous-option": "were living",
+                        "past-perfect-option": "had lived",
+                        "past-perfect-continuous-option": "had been living",
+                        "present-simple-option": "live",
+                        "present-continuous-option": "are living",
+                        "present-perfect-option": "have lived",
+                        "present-perfect-continuous-option": "have been living",
+                        "future-simple-option": "will live",
+                        "future-continuous-option": "will be living",
+                        "future-perfect-option": "will have lived",
+                        "future-perfect-continuous-option": "will have been living"
                     },
                     {
                         text: "She _____ to the gym three times a week.",
                         correctTense: "present-simple",
                         correctAnswer: "goes",
-                        explanation: "This describes a regular, habitual action in the present."
+                        explanation: "This describes a regular, habitual action in the present.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "was going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "goes",
+                        "present-continuous-option": "is going",
+                        "present-perfect-option": "has gone",
+                        "present-perfect-continuous-option": "has been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
                     },
                     {
                         text: "I _____ to finish this project by 5 PM today.",
                         correctTense: "present-continuous",
                         correctAnswer: "am trying",
-                        explanation: "This describes an action in progress at the present moment."
+                        explanation: "This describes an action in progress at the present moment.",
+                        "past-simple-option": "tried",
+                        "past-continuous-option": "was trying",
+                        "past-perfect-option": "had tried",
+                        "past-perfect-continuous-option": "had been trying",
+                        "present-simple-option": "try",
+                        "present-continuous-option": "am trying",
+                        "present-perfect-option": "have tried",
+                        "present-perfect-continuous-option": "have been trying",
+                        "future-simple-option": "will try",
+                        "future-continuous-option": "will be trying",
+                        "future-perfect-option": "will have tried",
+                        "future-perfect-continuous-option": "will have been trying"
                     },
                     {
                         text: "By the time you arrive, I _____ dinner.",
                         correctTense: "future-perfect",
                         correctAnswer: "will have prepared",
-                        explanation: "This describes an action that will be completed before a specific time in the future."
+                        explanation: "This describes an action that will be completed before a specific time in the future.",
+                        "past-simple-option": "prepared",
+                        "past-continuous-option": "was preparing",
+                        "past-perfect-option": "had prepared",
+                        "past-perfect-continuous-option": "had been preparing",
+                        "present-simple-option": "prepare",
+                        "present-continuous-option": "am preparing",
+                        "present-perfect-option": "have prepared",
+                        "present-perfect-continuous-option": "have been preparing",
+                        "future-simple-option": "will prepare",
+                        "future-continuous-option": "will be preparing",
+                        "future-perfect-option": "will have prepared",
+                        "future-perfect-continuous-option": "will have been preparing"
                     },
                     {
                         text: "She _____ English for six years now.",
                         correctTense: "present-perfect-continuous",
                         correctAnswer: "has been studying",
-                        explanation: "This describes an action that started in the past and continues to the present."
+                        explanation: "This describes an action that started in the past and continues to the present.",
+                        "past-simple-option": "studied",
+                        "past-continuous-option": "was studying",
+                        "past-perfect-option": "had studied",
+                        "past-perfect-continuous-option": "had been studying",
+                        "present-simple-option": "studies",
+                        "present-continuous-option": "is studying",
+                        "present-perfect-option": "has studied",
+                        "present-perfect-continuous-option": "has been studying",
+                        "future-simple-option": "will study",
+                        "future-continuous-option": "will be studying",
+                        "future-perfect-option": "will have studied",
+                        "future-perfect-continuous-option": "will have been studying"
                     },
                     {
                         text: "When I got home, my dog _____ in the garden for hours.",
                         correctTense: "past-perfect-continuous",
                         correctAnswer: "had been digging",
-                        explanation: "This describes an ongoing action that continued up to a specific time in the past."
+                        explanation: "This describes an ongoing action that continued up to a specific time in the past.",
+                        "past-simple-option": "dug",
+                        "past-continuous-option": "was digging",
+                        "past-perfect-option": "had dug",
+                        "past-perfect-continuous-option": "had been digging",
+                        "present-simple-option": "digs",
+                        "present-continuous-option": "is digging",
+                        "present-perfect-option": "has dug",
+                        "present-perfect-continuous-option": "has been digging",
+                        "future-simple-option": "will dig",
+                        "future-continuous-option": "will be digging",
+                        "future-perfect-option": "will have dug",
+                        "future-perfect-continuous-option": "will have been digging"
                     },
                     {
-                        "text": "They _____ dinner when the phone rang.",
+                        "text": "They _____ for an hour when the storm finally stopped.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been driving",
+                        "explanation": "This is an action that was ongoing before another past event.",
+                        "past-simple-option": "drove",
+                        "past-continuous-option": "were driving",
+                        "past-perfect-option": "had driven",
+                        "past-perfect-continuous-option": "had been driving",
+                        "present-simple-option": "drive",
+                        "present-continuous-option": "are driving",
+                        "present-perfect-option": "have driven",
+                        "present-perfect-continuous-option": "have been driving",
+                        "future-simple-option": "will drive",
+                        "future-continuous-option": "will be driving",
+                        "future-perfect-option": "will have driven",
+                        "future-perfect-continuous-option": "will have been driving"
+                    },
+                    {
+                        "text": "He _____ to the same barber since he moved here.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has gone",
+                        "explanation": "This action started in the past and is still relevant now.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "was going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "goes",
+                        "present-continuous-option": "is going",
+                        "present-perfect-option": "has gone",
+                        "present-perfect-continuous-option": "has been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
+                    },
+                    {
+                        "text": "At this time tomorrow, I _____ to New York.",
+                        "correctTense": "future-continuous",
+                        "correctAnswer": "will be flying",
+                        "explanation": "This is an action that will be in progress at a future time.",
+                        "past-simple-option": "flew",
+                        "past-continuous-option": "was flying",
+                        "past-perfect-option": "had flown",
+                        "past-perfect-continuous-option": "had been flying",
+                        "present-simple-option": "fly",
+                        "present-continuous-option": "am flying",
+                        "present-perfect-option": "have flown",
+                        "present-perfect-continuous-option": "have been flying",
+                        "future-simple-option": "will fly",
+                        "future-continuous-option": "will be flying",
+                        "future-perfect-option": "will have flown",
+                        "future-perfect-continuous-option": "will have been flying"
+                    },
+                    {
+                        "text": "She _____ at the company since 2010.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been working",
+                        "explanation": "This indicates an action started in the past and is still ongoing.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "is working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                    },
+                    {
+                        "text": "We _____ dinner when the doorbell rang.",
                         "correctTense": "past-continuous",
                         "correctAnswer": "were having",
-                        "explanation": "This describes an action in progress at a specific time in the past."
+                        "explanation": "This shows an action in progress in the past interrupted by another event.",
+                        "past-simple-option": "had",
+                        "past-continuous-option": "were having",
+                        "past-perfect-option": "had had",
+                        "past-perfect-continuous-option": "had been having",
+                        "present-simple-option": "have",
+                        "present-continuous-option": "are having",
+                        "present-perfect-option": "have had",
+                        "present-perfect-continuous-option": "have been having",
+                        "future-simple-option": "will have",
+                        "future-continuous-option": "will be having",
+                        "future-perfect-option": "will have had",
+                        "future-perfect-continuous-option": "will have been having"
                     },
                     {
-                        "text": "I _____ never _____ such a beautiful sunset before.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "have seen",
-                        "explanation": "This describes a life experience up to the present moment."
-                    },
-                    {
-                        "text": "She _____ her homework before dinner yesterday.",
+                        "text": "He _____ his homework before watching TV.",
                         "correctTense": "past-perfect",
                         "correctAnswer": "had finished",
-                        "explanation": "This describes an action that was completed before another past action."
+                        "explanation": "This action was completed before another past action.",
+                        "past-simple-option": "finished",
+                        "past-continuous-option": "was finishing",
+                        "past-perfect-option": "had finished",
+                        "past-perfect-continuous-option": "had been finishing",
+                        "present-simple-option": "finishes",
+                        "present-continuous-option": "is finishing",
+                        "present-perfect-option": "has finished",
+                        "present-perfect-continuous-option": "has been finishing",
+                        "future-simple-option": "will finish",
+                        "future-continuous-option": "will be finishing",
+                        "future-perfect-option": "will have finished",
+                        "future-perfect-continuous-option": "will have been finishing"
                     },
                     {
-                        "text": "We _____ to Paris next weekend.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will travel",
-                        "explanation": "This is a plan or decision made about the future."
-                    },
-                    {
-                        "text": "I think it _____ snow tonight.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will",
-                        "explanation": "This is a prediction based on opinion."
-                    },
-                    {
-                        "text": "They _____ for a walk when it started to rain.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "were going",
-                        "explanation": "This describes an ongoing past action interrupted by another action."
-                    },
-                    {
-                        "text": "She _____ to the dentist every six months.",
+                        "text": "I usually _____ a walk after lunch.",
                         "correctTense": "present-simple",
-                        "correctAnswer": "goes",
-                        "explanation": "This describes a habitual or routine action."
+                        "correctAnswer": "take",
+                        "explanation": "This describes a habitual action.",
+                        "past-simple-option": "took",
+                        "past-continuous-option": "was taking",
+                        "past-perfect-option": "had taken",
+                        "past-perfect-continuous-option": "had been taking",
+                        "present-simple-option": "take",
+                        "present-continuous-option": "am taking",
+                        "present-perfect-option": "have taken",
+                        "present-perfect-continuous-option": "have been taking",
+                        "future-simple-option": "will take",
+                        "future-continuous-option": "will be taking",
+                        "future-perfect-option": "will have taken",
+                        "future-perfect-continuous-option": "will have been taking"
                     },
                     {
-                        "text": "We _____ this movie three times already.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "have seen",
-                        "explanation": "This describes an action that has occurred at an unspecified time in the past and may happen again."
-                    },
-                    {
-                        "text": "By 2026, he _____ his degree.",
-                        "correctTense": "future-perfect",
-                        "correctAnswer": "will have earned",
-                        "explanation": "This describes an action that will be completed by a future time."
-                    },
-                    {
-                        "text": "I _____ at this company since 2010.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "have been working",
-                        "explanation": "This describes an ongoing action that began in the past and continues into the present."
-                    },
-                    {
-                        "text": "They _____ all day before they finally found the right place.",
-                        "correctTense": "past-perfect-continuous",
-                        "correctAnswer": "had been searching",
-                        "explanation": "This describes a continuous past action that led up to another past action."
-                    },
-                    {
-                        "text": "Right now, she _____ for her final exams.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "is studying",
-                        "explanation": "This describes an action happening at the current moment."
-                    },
-                    {
-                        "text": "By the time you get here, we _____ for over an hour.",
-                        "correctTense": "future-perfect-continuous",
-                        "correctAnswer": "will have been waiting",
-                        "explanation": "This describes a continuous future action up to a point in time."
-                    },
-                    {
-                        "text": "He _____ at the library when I saw him.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "was reading",
-                        "explanation": "This describes an action that was in progress at a specific past moment."
-                    },
-                    {
-                        "text": "They _____ a new car recently.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "have bought",
-                        "explanation": "This describes a completed action with relevance to the present."
-                    },
-                    {
-                        "text": "I _____ a book when the lights went out.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "was reading",
-                        "explanation": "This describes an ongoing action interrupted by another past action."
-                    },
-                    {
-                        "text": "She _____ to move to another city next year.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "is planning",
-                        "explanation": "This describes a future arrangement or plan that has already been decided."
-                    },
-                    {
-                        "text": "They _____ to Spain for their honeymoon next summer.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will go",
-                        "explanation": "This is a planned action in the future."
-                    },
-                    {
-                        "text": "He _____ his leg before the match started.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had injured",
-                        "explanation": "This describes a condition or action completed before another event in the past."
-                    },
-                    {
-                        "text": "By the time I graduate, I _____ this course for four years.",
-                        "correctTense": "future-perfect-continuous",
-                        "correctAnswer": "will have been taking",
-                        "explanation": "This describes an action that will be ongoing up until a future point."
-                    },
-                    {
-                        "text": "He _____ lunch when his friend called.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "was eating",
-                        "explanation": "This describes an action that was ongoing in the past when another action occurred."
-                    },
-                    {
-                        "text": "They _____ to Australia last summer.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "traveled",
-                        "explanation": "This describes a completed action at a specific time in the past."
-                    },
-                    {
-                        "text": "I _____ already _____ the book when she recommended it.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had read",
-                        "explanation": "This shows an action that was completed before another past action."
-                    },
-                    {
-                        "text": "She _____ to learn Spanish for a year.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "has been trying",
-                        "explanation": "This describes an action that began in the past and continues into the present."
-                    },
-                    {
-                        "text": "By the end of this week, I _____ all my assignments.",
-                        "correctTense": "future-perfect",
-                        "correctAnswer": "will have completed",
-                        "explanation": "This describes an action that will be finished before a specific point in the future."
-                    },
-                    {
-                        "text": "We _____ for the bus for over thirty minutes.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "have been waiting",
-                        "explanation": "This describes a continuing action that started in the past and still continues."
-                    },
-                    {
-                        "text": "She usually _____ up at 6 a.m.",
-                        "correctTense": "present-simple",
-                        "correctAnswer": "wakes",
-                        "explanation": "This describes a habitual action in the present."
-                    },
-                    {
-                        "text": "He _____ the guitar when he was young.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "played",
-                        "explanation": "This refers to a past habit or completed action."
-                    },
-                    {
-                        "text": "They _____ the house for hours before the guests arrived.",
-                        "correctTense": "past-perfect-continuous",
-                        "correctAnswer": "had been cleaning",
-                        "explanation": "This shows an ongoing action completed before a past event."
-                    },
-                    {
-                        "text": "I _____ to the new manager tomorrow afternoon.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will talk",
-                        "explanation": "This is a decision or plan for a future action."
-                    },
-                    {
-                        "text": "By next year, she _____ in this city for a decade.",
-                        "correctTense": "future-perfect-continuous",
-                        "correctAnswer": "will have been living",
-                        "explanation": "This expresses an ongoing future action that continues to a certain point."
-                    },
-                    {
-                        "text": "At the moment, I _____ my room.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "am cleaning",
-                        "explanation": "This describes what is happening right now."
-                    },
-                    {
-                        "text": "They _____ a new apartment recently.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "have rented",
-                        "explanation": "This refers to a completed action with relevance to the present."
-                    },
-                    {
-                        "text": "I _____ a sandwich right now.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "am eating",
-                        "explanation": "This shows an action currently in progress."
-                    },
-                    {
-                        "text": "We _____ all the invitations by yesterday.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had sent",
-                        "explanation": "This indicates the completion of an action before a specific time in the past."
-                    },
-                    {
-                        "text": "He _____ his leg while playing football last weekend.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "broke",
-                        "explanation": "This is a specific, completed action in the past."
-                    },
-                    {
-                        "text": "I think she _____ the answer.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will know",
-                        "explanation": "This is a prediction about the future."
-                    },
-                    {
-                        "text": "They _____ this road for months before it was finally finished.",
-                        "correctTense": "past-perfect-continuous",
-                        "correctAnswer": "had been repairing",
-                        "explanation": "This refers to a long past action leading up to another past event."
-                    },
-                    {
-                        "text": "She _____ very hard for the competition lately.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "has been training",
-                        "explanation": "This shows an action started in the past and still ongoing."
-                    },
-                    {
-                        "text": "By the time we reach the airport, the plane _____ off.",
-                        "correctTense": "future-perfect",
-                        "correctAnswer": "will have taken",
-                        "explanation": "This refers to a future action completed before another future point."
-                    },
-                    {
-                        "text": "He usually _____ his car on Sundays.",
-                        "correctTense": "present-simple",
-                        "correctAnswer": "washes",
-                        "explanation": "This describes a regular or habitual action."
-                    },
-                    {
-                        "text": "I _____ the news when the power went out.",
+                        "text": "He _____ a movie when I called him.",
                         "correctTense": "past-continuous",
                         "correctAnswer": "was watching",
-                        "explanation": "This is an action in progress that was interrupted by another past event."
+                        "explanation": "Describes an action in progress when another occurred.",
+                        "past-simple-option": "watched",
+                        "past-continuous-option": "was watching",
+                        "past-perfect-option": "had watched",
+                        "past-perfect-continuous-option": "had been watching",
+                        "present-simple-option": "watches",
+                        "present-continuous-option": "is watching",
+                        "present-perfect-option": "has watched",
+                        "present-perfect-continuous-option": "has been watching",
+                        "future-simple-option": "will watch",
+                        "future-continuous-option": "will be watching",
+                        "future-perfect-option": "will have watched",
+                        "future-perfect-continuous-option": "will have been watching"
                     },
                     {
-                        "text": "She _____ all night before the big exam.",
+                        "text": "We _____ to the museum tomorrow.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will go",
+                        "explanation": "This is a decision or plan for the future.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "were going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "go",
+                        "present-continuous-option": "are going",
+                        "present-perfect-option": "have gone",
+                        "present-perfect-continuous-option": "have been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
+                    },
+                    {
+                        "text": "By 2025, they _____ the new stadium.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have built",
+                        "explanation": "This action will be completed before a specific future time.",
+                        "past-simple-option": "built",
+                        "past-continuous-option": "were building",
+                        "past-perfect-option": "had built",
+                        "past-perfect-continuous-option": "had been building",
+                        "present-simple-option": "build",
+                        "present-continuous-option": "are building",
+                        "present-perfect-option": "have built",
+                        "present-perfect-continuous-option": "have been building",
+                        "future-simple-option": "will build",
+                        "future-continuous-option": "will be building",
+                        "future-perfect-option": "will have built",
+                        "future-perfect-continuous-option": "will have been building"
+                    },
+                    {
+                        "text": "She _____ the piano for two hours when her friends arrived.",
                         "correctTense": "past-perfect-continuous",
-                        "correctAnswer": "had been studying",
-                        "explanation": "This shows a past action that continued up to another past moment."
+                        "correctAnswer": "had been playing",
+                        "explanation": "This shows a long action that was happening before another past event.",
+                        "past-simple-option": "played",
+                        "past-continuous-option": "was playing",
+                        "past-perfect-option": "had played",
+                        "past-perfect-continuous-option": "had been playing",
+                        "present-simple-option": "plays",
+                        "present-continuous-option": "is playing",
+                        "present-perfect-option": "has played",
+                        "present-perfect-continuous-option": "has been playing",
+                        "future-simple-option": "will play",
+                        "future-continuous-option": "will be playing",
+                        "future-perfect-option": "will have played",
+                        "future-perfect-continuous-option": "will have been playing"
                     },
                     {
-                        "text": "They _____ to build a new school next year.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "are planning",
-                        "explanation": "This expresses a near-future arrangement."
+                        "text": "They _____ here every summer since 2015.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have stayed",
+                        "explanation": "The action started in the past and continues into the present.",
+                        "past-simple-option": "stayed",
+                        "past-continuous-option": "were staying",
+                        "past-perfect-option": "had stayed",
+                        "past-perfect-continuous-option": "had been staying",
+                        "present-simple-option": "stay",
+                        "present-continuous-option": "are staying",
+                        "present-perfect-option": "have stayed",
+                        "present-perfect-continuous-option": "have been staying",
+                        "future-simple-option": "will stay",
+                        "future-continuous-option": "will be staying",
+                        "future-perfect-option": "will have stayed",
+                        "future-perfect-continuous-option": "will have been staying"
                     },
                     {
-                        "text": "By 8 p.m., I _____ my workout.",
+                        "text": "I _____ my keys! I can't find them anywhere.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have lost",
+                        "explanation": "This shows a recent action that affects the present.",
+                        "past-simple-option": "lost",
+                        "past-continuous-option": "was losing",
+                        "past-perfect-option": "had lost",
+                        "past-perfect-continuous-option": "had been losing",
+                        "present-simple-option": "lose",
+                        "present-continuous-option": "am losing",
+                        "present-perfect-option": "have lost",
+                        "present-perfect-continuous-option": "have been losing",
+                        "future-simple-option": "will lose",
+                        "future-continuous-option": "will be losing",
+                        "future-perfect-option": "will have lost",
+                        "future-perfect-continuous-option": "will have been losing"
+                    },
+                    {
+                        "text": "By next month, I _____ this book.",
                         "correctTense": "future-perfect",
                         "correctAnswer": "will have finished",
-                        "explanation": "This shows a future action that will be completed before a specific time."
+                        "explanation": "This is something that will be completed before a future time.",
+                        "past-simple-option": "finished",
+                        "past-continuous-option": "was finishing",
+                        "past-perfect-option": "had finished",
+                        "past-perfect-continuous-option": "had been finishing",
+                        "present-simple-option": "finish",
+                        "present-continuous-option": "am finishing",
+                        "present-perfect-option": "have finished",
+                        "present-perfect-continuous-option": "have been finishing",
+                        "future-simple-option": "will finish",
+                        "future-continuous-option": "will be finishing",
+                        "future-perfect-option": "will have finished",
+                        "future-perfect-continuous-option": "will have been finishing"
                     },
                     {
-                        "text": "I _____ him before he moved abroad.",
+                        "text": "While he _____, his phone rang.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was sleeping",
+                        "explanation": "Describes an action in progress interrupted by another past action.",
+                        "past-simple-option": "slept",
+                        "past-continuous-option": "was sleeping",
+                        "past-perfect-option": "had slept",
+                        "past-perfect-continuous-option": "had been sleeping",
+                        "present-simple-option": "sleeps",
+                        "present-continuous-option": "is sleeping",
+                        "present-perfect-option": "has slept",
+                        "present-perfect-continuous-option": "has been sleeping",
+                        "future-simple-option": "will sleep",
+                        "future-continuous-option": "will be sleeping",
+                        "future-perfect-option": "will have slept",
+                        "future-perfect-continuous-option": "will have been sleeping"
+                    },
+                    {
+                        "text": "They _____ in Paris when the news broke.",
                         "correctTense": "past-perfect",
-                        "correctAnswer": "had met",
-                        "explanation": "This describes an action completed before another action in the past."
+                        "correctAnswer": "had arrived",
+                        "explanation": "This shows a completed action before another past event.",
+                        "past-simple-option": "arrived",
+                        "past-continuous-option": "were arriving",
+                        "past-perfect-option": "had arrived",
+                        "past-perfect-continuous-option": "had been arriving",
+                        "present-simple-option": "arrive",
+                        "present-continuous-option": "are arriving",
+                        "present-perfect-option": "have arrived",
+                        "present-perfect-continuous-option": "have been arriving",
+                        "future-simple-option": "will arrive",
+                        "future-continuous-option": "will be arriving",
+                        "future-perfect-option": "will have arrived",
+                        "future-perfect-continuous-option": "will have been arriving"
                     },
                     {
-                        "text": "Look! That dog _____ your sandwich!",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "is eating",
-                        "explanation": "This describes an action happening at this very moment."
-                    },
-                    {
-                        "text": "He _____ his leg before the trip, so he couldn't go.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had injured",
-                        "explanation": "This describes a condition that existed before another past event."
-                    },
-                    {
-                        "text": "They _____ to Italy next month.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will travel",
-                        "explanation": "This is a decision or prediction about a future action."
-                    },
-                    {
-                        "text": "She _____ five books so far this year.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "has read",
-                        "explanation": "This shows a completed action with relevance to the present."
-                    },
-                    {
-                        "text": "At this time tomorrow, I _____ on the beach.",
+                        "text": "He _____ a speech at 3 p.m. tomorrow.",
                         "correctTense": "future-continuous",
-                        "correctAnswer": "will be lying",
-                        "explanation": "This describes an action that will be in progress at a specific future time."
+                        "correctAnswer": "will be giving",
+                        "explanation": "This indicates an action in progress at a future time.",
+                        "past-simple-option": "gave",
+                        "past-continuous-option": "was giving",
+                        "past-perfect-option": "had given",
+                        "past-perfect-continuous-option": "had been giving",
+                        "present-simple-option": "gives",
+                        "present-continuous-option": "is giving",
+                        "present-perfect-option": "has given",
+                        "present-perfect-continuous-option": "has been giving",
+                        "future-simple-option": "will give",
+                        "future-continuous-option": "will be giving",
+                        "future-perfect-option": "will have given",
+                        "future-perfect-continuous-option": "will have been giving"
                     },
                     {
-                        "text": "We _____ at this restaurant every Friday.",
+                        "text": "She _____ lunch when I got home.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had prepared",
+                        "explanation": "The action of preparing was completed before another past event.",
+                        "past-simple-option": "prepared",
+                        "past-continuous-option": "was preparing",
+                        "past-perfect-option": "had prepared",
+                        "past-perfect-continuous-option": "had been preparing",
+                        "present-simple-option": "prepares",
+                        "present-continuous-option": "is preparing",
+                        "present-perfect-option": "has prepared",
+                        "present-perfect-continuous-option": "has been preparing",
+                        "future-simple-option": "will prepare",
+                        "future-continuous-option": "will be preparing",
+                        "future-perfect-option": "will have prepared",
+                        "future-perfect-continuous-option": "will have been preparing"
+                    },
+                    {
+                        "text": "We _____ about moving abroad lately.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been thinking",
+                        "explanation": "This action started in the past and continues into the present.",
+                        "past-simple-option": "thought",
+                        "past-continuous-option": "were thinking",
+                        "past-perfect-option": "had thought",
+                        "past-perfect-continuous-option": "had been thinking",
+                        "present-simple-option": "think",
+                        "present-continuous-option": "are thinking",
+                        "present-perfect-option": "have thought",
+                        "present-perfect-continuous-option": "have been thinking",
+                        "future-simple-option": "will think",
+                        "future-continuous-option": "will be thinking",
+                        "future-perfect-option": "will have thought",
+                        "future-perfect-continuous-option": "will have been thinking"
+                    },
+                    {
+                        "text": "I _____ to the gym every morning.",
                         "correctTense": "present-simple",
-                        "correctAnswer": "eat",
-                        "explanation": "This is a habitual action or routine."
+                        "correctAnswer": "go",
+                        "explanation": "This is a regular or habitual action.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "was going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "go",
+                        "present-continuous-option": "am going",
+                        "present-perfect-option": "have gone",
+                        "present-perfect-continuous-option": "have been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
                     },
                     {
-                        "text": "He _____ a lot of progress lately.",
+                        text: "While I was walking through the park yesterday afternoon, I suddenly realized I _____ my phone at home.",
+                        correctTense: "past-perfect",
+                        correctAnswer: "had left",
+                        explanation: "The realization happened after the action of leaving the phone, so past perfect is used.",
+                        "past-simple-option": "left",
+                        "past-continuous-option": "was leaving",
+                        "past-perfect-option": "had left",
+                        "past-perfect-continuous-option": "had been leaving",
+                        "present-simple-option": "leave",
+                        "present-continuous-option": "am leaving",
+                        "present-perfect-option": "have left",
+                        "present-perfect-continuous-option": "have been leaving",
+                        "future-simple-option": "will leave",
+                        "future-continuous-option": "will be leaving",
+                        "future-perfect-option": "will have left",
+                        "future-perfect-continuous-option": "will have been leaving"
+                    },
+                    {
+                        text: "At 7 PM last night, the entire team _____ in the conference room, discussing the new project timeline.",
+                        correctTense: "past-continuous",
+                        correctAnswer: "was sitting",
+                        explanation: "This describes an action that was ongoing at a specific time in the past.",
+                        "past-simple-option": "sat",
+                        "past-continuous-option": "was sitting",
+                        "past-perfect-option": "had sat",
+                        "past-perfect-continuous-option": "had been sitting",
+                        "present-simple-option": "sits",
+                        "present-continuous-option": "is sitting",
+                        "present-perfect-option": "has sat",
+                        "present-perfect-continuous-option": "has been sitting",
+                        "future-simple-option": "will sit",
+                        "future-continuous-option": "will be sitting",
+                        "future-perfect-option": "will have sat",
+                        "future-perfect-continuous-option": "will have been sitting"
+                    },
+                    {
+                        text: "By the end of this semester, all the students _____ their final presentations to the class.",
+                        correctTense: "future-perfect",
+                        correctAnswer: "will have given",
+                        explanation: "The action will be completed before a future time reference (the end of the semester).",
+                        "past-simple-option": "gave",
+                        "past-continuous-option": "were giving",
+                        "past-perfect-option": "had given",
+                        "past-perfect-continuous-option": "had been giving",
+                        "present-simple-option": "give",
+                        "present-continuous-option": "are giving",
+                        "present-perfect-option": "have given",
+                        "present-perfect-continuous-option": "have been giving",
+                        "future-simple-option": "will give",
+                        "future-continuous-option": "will be giving",
+                        "future-perfect-option": "will have given",
+                        "future-perfect-continuous-option": "will have been giving"
+                    },
+                    {
+                        text: "Every morning before sunrise, she _____ a few minutes meditating before starting her daily routine.",
+                        correctTense: "present-simple",
+                        correctAnswer: "spends",
+                        explanation: "This is a regular, habitual action that happens daily.",
+                        "past-simple-option": "spent",
+                        "past-continuous-option": "was spending",
+                        "past-perfect-option": "had spent",
+                        "past-perfect-continuous-option": "had been spending",
+                        "present-simple-option": "spends",
+                        "present-continuous-option": "is spending",
+                        "present-perfect-option": "has spent",
+                        "present-perfect-continuous-option": "has been spending",
+                        "future-simple-option": "will spend",
+                        "future-continuous-option": "will be spending",
+                        "future-perfect-option": "will have spent",
+                        "future-perfect-continuous-option": "will have been spending"
+                    },
+                    {
+                        text: "When I called them last night, they _____ dinner and couldn't talk for long.",
+                        correctTense: "past-continuous",
+                        correctAnswer: "were having",
+                        explanation: "This is an action in progress at a specific time in the past.",
+                        "past-simple-option": "had",
+                        "past-continuous-option": "were having",
+                        "past-perfect-option": "had had",
+                        "past-perfect-continuous-option": "had been having",
+                        "present-simple-option": "have",
+                        "present-continuous-option": "are having",
+                        "present-perfect-option": "have had",
+                        "present-perfect-continuous-option": "have been having",
+                        "future-simple-option": "will have",
+                        "future-continuous-option": "will be having",
+                        "future-perfect-option": "will have had",
+                        "future-perfect-continuous-option": "will have been having"
+                    },
+                    {
+                        "text": "By the time the guests arrived, the caterers _____ the food on the tables.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had arranged",
+                        "explanation": "This action was completed before another past action.",
+                        "past-simple-option": "arranged",
+                        "past-continuous-option": "were arranging",
+                        "past-perfect-option": "had arranged",
+                        "past-perfect-continuous-option": "had been arranging",
+                        "present-simple-option": "arrange",
+                        "present-continuous-option": "are arranging",
+                        "present-perfect-option": "have arranged",
+                        "present-perfect-continuous-option": "have been arranging",
+                        "future-simple-option": "will arrange",
+                        "future-continuous-option": "will be arranging",
+                        "future-perfect-option": "will have arranged",
+                        "future-perfect-continuous-option": "will have been arranging"
+                    },
+                    {
+                        "text": "She _____ in the garden when it suddenly started to rain.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was working",
+                        "explanation": "The action was ongoing when another action occurred.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "is working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                    },
+                    {
+                        "text": "I _____ to the gym every morning before breakfast.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "go",
+                        "explanation": "This is a habitual action.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "was going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "go",
+                        "present-continuous-option": "am going",
+                        "present-perfect-option": "have gone",
+                        "present-perfect-continuous-option": "have been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
+                    },
+                    {
+                        "text": "They _____ in the same house for over twenty years.",
                         "correctTense": "present-perfect",
-                        "correctAnswer": "has made",
-                        "explanation": "This action started in the past and is relevant to the present."
+                        "correctAnswer": "have lived",
+                        "explanation": "The action started in the past and continues to the present.",
+                        "past-simple-option": "lived",
+                        "past-continuous-option": "were living",
+                        "past-perfect-option": "had lived",
+                        "past-perfect-continuous-option": "had been living",
+                        "present-simple-option": "live",
+                        "present-continuous-option": "are living",
+                        "present-perfect-option": "have lived",
+                        "present-perfect-continuous-option": "have been living",
+                        "future-simple-option": "will live",
+                        "future-continuous-option": "will be living",
+                        "future-perfect-option": "will have lived",
+                        "future-perfect-continuous-option": "will have been living"
                     },
                     {
-                        "text": "They _____ for hours when the coach finally arrived.",
+                        "text": "By next month, she _____ her thesis.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have completed",
+                        "explanation": "The action will be completed before a specified future time.",
+                        "past-simple-option": "completed",
+                        "past-continuous-option": "was completing",
+                        "past-perfect-option": "had completed",
+                        "past-perfect-continuous-option": "had been completing",
+                        "present-simple-option": "completes",
+                        "present-continuous-option": "is completing",
+                        "present-perfect-option": "has completed",
+                        "present-perfect-continuous-option": "has been completing",
+                        "future-simple-option": "will complete",
+                        "future-continuous-option": "will be completing",
+                        "future-perfect-option": "will have completed",
+                        "future-perfect-continuous-option": "will have been completing"
+                    },
+                    {
+                        "text": "I _____ for the bus for over an hour when it finally arrived.",
                         "correctTense": "past-perfect-continuous",
                         "correctAnswer": "had been waiting",
-                        "explanation": "This expresses a past action that was ongoing before another past event."
+                        "explanation": "This describes an ongoing action that was happening before another past event.",
+                        "past-simple-option": "waited",
+                        "past-continuous-option": "was waiting",
+                        "past-perfect-option": "had waited",
+                        "past-perfect-continuous-option": "had been waiting",
+                        "present-simple-option": "wait",
+                        "present-continuous-option": "am waiting",
+                        "present-perfect-option": "have waited",
+                        "present-perfect-continuous-option": "have been waiting",
+                        "future-simple-option": "will wait",
+                        "future-continuous-option": "will be waiting",
+                        "future-perfect-option": "will have waited",
+                        "future-perfect-continuous-option": "will have been waiting"
                     },
                     {
-                        "text": "I _____ to call you yesterday, but I forgot.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "meant",
-                        "explanation": "This is a completed action that occurred at a specific past time."
-                    },
-                    {
-                        "text": "By the time the guests come, she _____ everything ready.",
-                        "correctTense": "future-perfect",
-                        "correctAnswer": "will have prepared",
-                        "explanation": "This describes an action that will be finished before a specific future event."
-                    },
-                    {
-                        "text": "We _____ for this event for months.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "have been preparing",
-                        "explanation": "This shows an action started in the past and continuing into the present."
-                    },
-                    {
-                        "text": "He _____ already _____ when I got there.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had left",
-                        "explanation": "This describes an action that was completed before another action in the past."
-                    },
-                    {
-                        "text": "She _____ her keys again!",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "has lost",
-                        "explanation": "This describes a recent action with present consequences."
-                    },
-                    {
-                        "text": "They _____ to call us if there’s a delay.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will remember",
-                        "explanation": "This is a promise or prediction about the future."
-                    },
-                    {
-                        "text": "She _____ a letter when the phone rang.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "was writing",
-                        "explanation": "This is an action that was in progress when another past event interrupted it."
-                    },
-                    {
-                        "text": "They _____ a new product next quarter.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will launch",
-                        "explanation": "This describes a planned or predicted action in the future."
-                    },
-                    {
-                        "text": "I _____ this movie three times already.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "have seen",
-                        "explanation": "This refers to an experience up to the present."
-                    },
-                    {
-                        "text": "By next summer, we _____ here for five years.",
-                        "correctTense": "future-perfect-continuous",
-                        "correctAnswer": "will have been living",
-                        "explanation": "This is an ongoing action continuing up to a future point."
-                    },
-                    {
-                        "text": "He _____ a lot of coffee lately.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "has been drinking",
-                        "explanation": "This shows an action that started in the past and is still happening."
-                    },
-                    {
-                        "text": "We _____ the documents before the deadline.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had submitted",
-                        "explanation": "This indicates completion of an action before a past moment."
-                    },
-                    {
-                        "text": "Right now, the kids _____ in the garden.",
-                        "correctTense": "present-continuous",
-                        "correctAnswer": "are playing",
-                        "explanation": "This describes an action happening at the present moment."
-                    },
-                    {
-                        "text": "She _____ for that company in 2015.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "worked",
-                        "explanation": "This is a completed action at a specific time in the past."
-                    },
-                    {
-                        "text": "We _____ for you at the station tomorrow at 6 p.m.",
+                        "text": "At this time tomorrow, we _____ over the Atlantic.",
                         "correctTense": "future-continuous",
-                        "correctAnswer": "will be waiting",
-                        "explanation": "This describes an action in progress at a specific time in the future."
+                        "correctAnswer": "will be flying",
+                        "explanation": "This describes an action that will be in progress at a specific future time.",
+                        "past-simple-option": "flew",
+                        "past-continuous-option": "were flying",
+                        "past-perfect-option": "had flown",
+                        "past-perfect-continuous-option": "had been flying",
+                        "present-simple-option": "fly",
+                        "present-continuous-option": "are flying",
+                        "present-perfect-option": "have flown",
+                        "present-perfect-continuous-option": "have been flying",
+                        "future-simple-option": "will fly",
+                        "future-continuous-option": "will be flying",
+                        "future-perfect-option": "will have flown",
+                        "future-perfect-continuous-option": "will have been flying"
                     },
                     {
-                        "text": "I _____ my homework yet.",
-                        "correctTense": "present-perfect",
-                        "correctAnswer": "haven’t finished",
-                        "explanation": "This refers to an action that has not yet been completed up to now."
-                    },
-                    {
-                        "text": "They _____ their tickets before arriving at the airport.",
+                        "text": "She _____ her homework when her friends arrived.",
                         "correctTense": "past-perfect",
-                        "correctAnswer": "had printed",
-                        "explanation": "This is a completed action before another past event."
+                        "correctAnswer": "had finished",
+                        "explanation": "This action was completed before another past action.",
+                        "past-simple-option": "finished",
+                        "past-continuous-option": "was finishing",
+                        "past-perfect-option": "had finished",
+                        "past-perfect-continuous-option": "had been finishing",
+                        "present-simple-option": "finishes",
+                        "present-continuous-option": "is finishing",
+                        "present-perfect-option": "has finished",
+                        "present-perfect-continuous-option": "has been finishing",
+                        "future-simple-option": "will finish",
+                        "future-continuous-option": "will be finishing",
+                        "future-perfect-option": "will have finished",
+                        "future-perfect-continuous-option": "will have been finishing"
                     },
                     {
-                        "text": "He _____ to be more careful in the future.",
-                        "correctTense": "future-simple",
-                        "correctAnswer": "will try",
-                        "explanation": "This expresses a promise or intention about the future."
+                        "text": "They _____ to the museum every weekend.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "go",
+                        "explanation": "This is a habitual action.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "were going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "go",
+                        "present-continuous-option": "are going",
+                        "present-perfect-option": "have gone",
+                        "present-perfect-continuous-option": "have been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
                     },
                     {
-                        "text": "She _____ to the gym every day last month.",
-                        "correctTense": "past-simple",
-                        "correctAnswer": "went",
-                        "explanation": "This describes a repeated action in the past."
+                        "text": "By the end of this year, I _____ at this company for five years.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been working",
+                        "explanation": "This describes an action that will continue up to a specific point in the future.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "work",
+                        "present-continuous-option": "am working",
+                        "present-perfect-option": "have worked",
+                        "present-perfect-continuous-option": "have been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
                     },
                     {
-                        "text": "By the end of this year, I _____ all my exams.",
+                        "text": "When I called her, she _____ a shower.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was taking",
+                        "explanation": "The action was ongoing when another action occurred.",
+                        "past-simple-option": "took",
+                        "past-continuous-option": "was taking",
+                        "past-perfect-option": "had taken",
+                        "past-perfect-continuous-option": "had been taking",
+                        "present-simple-option": "takes",
+                        "present-continuous-option": "is taking",
+                        "present-perfect-option": "has taken",
+                        "present-perfect-continuous-option": "has been taking",
+                        "future-simple-option": "will take",
+                        "future-continuous-option": "will be taking",
+                        "future-perfect-option": "will have taken",
+                        "future-perfect-continuous-option": "will have been taking"
+                    },
+                    {
+                        "text": "Tom _____ a book when the lights suddenly went out.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was reading",
+                        "explanation": "This describes an action that was in progress when another past event occurred.",
+                        "past-simple-option": "read",
+                        "past-continuous-option": "was reading",
+                        "past-perfect-option": "had read",
+                        "past-perfect-continuous-option": "had been reading",
+                        "present-simple-option": "reads",
+                        "present-continuous-option": "is reading",
+                        "present-perfect-option": "has read",
+                        "present-perfect-continuous-option": "has been reading",
+                        "future-simple-option": "will read",
+                        "future-continuous-option": "will be reading",
+                        "future-perfect-option": "will have read",
+                        "future-perfect-continuous-option": "will have been reading"
+                    },
+                    {
+                        "text": "I _____ to the manager twice before I received a response.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had written",
+                        "explanation": "This action happened before another past action.",
+                        "past-simple-option": "wrote",
+                        "past-continuous-option": "was writing",
+                        "past-perfect-option": "had written",
+                        "past-perfect-continuous-option": "had been writing",
+                        "present-simple-option": "write",
+                        "present-continuous-option": "am writing",
+                        "present-perfect-option": "have written",
+                        "present-perfect-continuous-option": "have been writing",
+                        "future-simple-option": "will write",
+                        "future-continuous-option": "will be writing",
+                        "future-perfect-option": "will have written",
+                        "future-perfect-continuous-option": "will have been writing"
+                    },
+                    {
+                        "text": "It’s already 10 PM and he still _____ his homework.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "hasn’t finished",
+                        "explanation": "This describes an action that has not yet been completed up to the present moment.",
+                        "past-simple-option": "didn't finish",
+                        "past-continuous-option": "wasn't finishing",
+                        "past-perfect-option": "hadn't finished",
+                        "past-perfect-continuous-option": "hadn't been finishing",
+                        "present-simple-option": "doesn’t finish",
+                        "present-continuous-option": "isn’t finishing",
+                        "present-perfect-option": "hasn’t finished",
+                        "present-perfect-continuous-option": "hasn’t been finishing",
+                        "future-simple-option": "won’t finish",
+                        "future-continuous-option": "won’t be finishing",
+                        "future-perfect-option": "won’t have finished",
+                        "future-perfect-continuous-option": "won’t have been finishing"
+                    },
+                    {
+                        "text": "We _____ all morning when the phone finally rang.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been waiting",
+                        "explanation": "This shows an ongoing action that happened before a point in the past.",
+                        "past-simple-option": "waited",
+                        "past-continuous-option": "were waiting",
+                        "past-perfect-option": "had waited",
+                        "past-perfect-continuous-option": "had been waiting",
+                        "present-simple-option": "wait",
+                        "present-continuous-option": "are waiting",
+                        "present-perfect-option": "have waited",
+                        "present-perfect-continuous-option": "have been waiting",
+                        "future-simple-option": "will wait",
+                        "future-continuous-option": "will be waiting",
+                        "future-perfect-option": "will have waited",
+                        "future-perfect-continuous-option": "will have been waiting"
+                    },
+                    {
+                        "text": "Next year, she _____ at the company for two decades.",
                         "correctTense": "future-perfect",
-                        "correctAnswer": "will have passed",
-                        "explanation": "This action will be completed before a certain time in the future."
+                        "correctAnswer": "will have worked",
+                        "explanation": "This refers to an action that will be completed by a specific time in the future.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "is working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
                     },
                     {
-                        "text": "They _____ to decorate the room for hours before the party.",
+                        "text": "He usually _____ coffee in the morning before starting work.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "drinks",
+                        "explanation": "This is a habitual action that happens regularly.",
+                        "past-simple-option": "drank",
+                        "past-continuous-option": "was drinking",
+                        "past-perfect-option": "had drunk",
+                        "past-perfect-continuous-option": "had been drinking",
+                        "present-simple-option": "drinks",
+                        "present-continuous-option": "is drinking",
+                        "present-perfect-option": "has drunk",
+                        "present-perfect-continuous-option": "has been drinking",
+                        "future-simple-option": "will drink",
+                        "future-continuous-option": "will be drinking",
+                        "future-perfect-option": "will have drunk",
+                        "future-perfect-continuous-option": "will have been drinking"
+                    },
+                    {
+                        "text": "At this time tomorrow, we _____ over the Atlantic Ocean.",
+                        "correctTense": "future-continuous",
+                        "correctAnswer": "will be flying",
+                        "explanation": "This describes an action that will be in progress at a specific future time.",
+                        "past-simple-option": "flew",
+                        "past-continuous-option": "were flying",
+                        "past-perfect-option": "had flown",
+                        "past-perfect-continuous-option": "had been flying",
+                        "present-simple-option": "fly",
+                        "present-continuous-option": "are flying",
+                        "present-perfect-option": "have flown",
+                        "present-perfect-continuous-option": "have been flying",
+                        "future-simple-option": "will fly",
+                        "future-continuous-option": "will be flying",
+                        "future-perfect-option": "will have flown",
+                        "future-perfect-continuous-option": "will have been flying"
+                    },
+                    {
+                        "text": "I _____ about your suggestion and I think it’s a great idea.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have thought",
+                        "explanation": "This action started in the past and has relevance to the present.",
+                        "past-simple-option": "thought",
+                        "past-continuous-option": "was thinking",
+                        "past-perfect-option": "had thought",
+                        "past-perfect-continuous-option": "had been thinking",
+                        "present-simple-option": "think",
+                        "present-continuous-option": "am thinking",
+                        "present-perfect-option": "have thought",
+                        "present-perfect-continuous-option": "have been thinking",
+                        "future-simple-option": "will think",
+                        "future-continuous-option": "will be thinking",
+                        "future-perfect-option": "will have thought",
+                        "future-perfect-continuous-option": "will have been thinking"
+                    },
+                    {
+                        "text": "He _____ every day since the doctor told him to get more exercise.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been walking",
+                        "explanation": "This is an action that started in the past and is still continuing.",
+                        "past-simple-option": "walked",
+                        "past-continuous-option": "was walking",
+                        "past-perfect-option": "had walked",
+                        "past-perfect-continuous-option": "had been walking",
+                        "present-simple-option": "walks",
+                        "present-continuous-option": "is walking",
+                        "present-perfect-option": "has walked",
+                        "present-perfect-continuous-option": "has been walking",
+                        "future-simple-option": "will walk",
+                        "future-continuous-option": "will be walking",
+                        "future-perfect-option": "will have walked",
+                        "future-perfect-continuous-option": "will have been walking"
+                    },
+                    {
+                        "text": "The team _____ hard on the new product launch when the CEO resigned.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been working",
+                        "explanation": "This describes an action that was ongoing before a past event.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "is working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                    },
+                    {
+                        "text": "I _____ dinner when my friends unexpectedly arrived.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was cooking",
+                        "explanation": "This is an action that was in progress when something else happened.",
+                        "past-simple-option": "cooked",
+                        "past-continuous-option": "was cooking",
+                        "past-perfect-option": "had cooked",
+                        "past-perfect-continuous-option": "had been cooking",
+                        "present-simple-option": "cook",
+                        "present-continuous-option": "am cooking",
+                        "present-perfect-option": "have cooked",
+                        "present-perfect-continuous-option": "have been cooking",
+                        "future-simple-option": "will cook",
+                        "future-continuous-option": "will be cooking",
+                        "future-perfect-option": "will have cooked",
+                        "future-perfect-continuous-option": "will have been cooking"
+                    },
+                    {
+                        "text": "When she retires, she _____ at the hospital for 30 years.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have worked",
+                        "explanation": "This shows the completion of a long-term action by a future point.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "is working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                    },
+                    {
+                        "text": "I _____ to reach you all day but your phone was off.",
                         "correctTense": "past-perfect-continuous",
                         "correctAnswer": "had been trying",
-                        "explanation": "This shows continuous effort leading up to a past point."
+                        "explanation": "This indicates a repeated effort continuing up to a moment in the past.",
+                        "past-simple-option": "tried",
+                        "past-continuous-option": "was trying",
+                        "past-perfect-option": "had tried",
+                        "past-perfect-continuous-option": "had been trying",
+                        "present-simple-option": "try",
+                        "present-continuous-option": "am trying",
+                        "present-perfect-option": "have tried",
+                        "present-perfect-continuous-option": "have been trying",
+                        "future-simple-option": "will try",
+                        "future-continuous-option": "will be trying",
+                        "future-perfect-option": "will have tried",
+                        "future-perfect-continuous-option": "will have been trying"
                     },
                     {
-                        "text": "He _____ for a walk every morning.",
-                        "correctTense": "present-simple",
-                        "correctAnswer": "goes",
-                        "explanation": "This describes a daily routine."
+                        "text": "Right now, the children _____ quietly in their room.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "are playing",
+                        "explanation": "This action is currently happening.",
+                        "past-simple-option": "played",
+                        "past-continuous-option": "were playing",
+                        "past-perfect-option": "had played",
+                        "past-perfect-continuous-option": "had been playing",
+                        "present-simple-option": "play",
+                        "present-continuous-option": "are playing",
+                        "present-perfect-option": "have played",
+                        "present-perfect-continuous-option": "have been playing",
+                        "future-simple-option": "will play",
+                        "future-continuous-option": "will be playing",
+                        "future-perfect-option": "will have played",
+                        "future-perfect-continuous-option": "will have been playing"
                     },
                     {
-                        "text": "I _____ lunch when you called.",
-                        "correctTense": "past-continuous",
-                        "correctAnswer": "was having",
-                        "explanation": "This is an action in progress interrupted by another past action."
+                        "text": "They _____ the same mistakes if they don’t learn from their past.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will repeat",
+                        "explanation": "This is a general prediction about the future.",
+                        "past-simple-option": "repeated",
+                        "past-continuous-option": "were repeating",
+                        "past-perfect-option": "had repeated",
+                        "past-perfect-continuous-option": "had been repeating",
+                        "present-simple-option": "repeat",
+                        "present-continuous-option": "are repeating",
+                        "present-perfect-option": "have repeated",
+                        "present-perfect-continuous-option": "have been repeating",
+                        "future-simple-option": "will repeat",
+                        "future-continuous-option": "will be repeating",
+                        "future-perfect-option": "will have repeated",
+                        "future-perfect-continuous-option": "will have been repeating"
                     },
                     {
-                        "text": "We _____ a lot about climate change lately.",
-                        "correctTense": "present-perfect-continuous",
-                        "correctAnswer": "have been hearing",
-                        "explanation": "This describes a recent and ongoing situation."
-                    },
-                    {
-                        "text": "She _____ him before the meeting started.",
-                        "correctTense": "past-perfect",
-                        "correctAnswer": "had called",
-                        "explanation": "This shows a completed action before a past event."
-                    },
-                    {
-                        "text": "By this time next week, we _____ our vacation.",
+                        "text": "When I looked at the clock, I realized I _____ for over two hours without taking a break.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been working",
+                        "explanation": "This describes an action that was ongoing before another past action occurred.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "was working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "work",
+                        "present-continuous-option": "am working",
+                        "present-perfect-option": "have worked",
+                        "present-perfect-continuous-option": "have been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                        },
+                        {
+                        "text": "Tomorrow at this time, we _____ over the Pacific Ocean on our way to Japan.",
+                        "correctTense": "future-continuous",
+                        "correctAnswer": "will be flying",
+                        "explanation": "This describes an action that will be in progress at a specific time in the future.",
+                        "past-simple-option": "flew",
+                        "past-continuous-option": "were flying",
+                        "past-perfect-option": "had flown",
+                        "past-perfect-continuous-option": "had been flying",
+                        "present-simple-option": "fly",
+                        "present-continuous-option": "are flying",
+                        "present-perfect-option": "have flown",
+                        "present-perfect-continuous-option": "have been flying",
+                        "future-simple-option": "will fly",
+                        "future-continuous-option": "will be flying",
+                        "future-perfect-option": "will have flown",
+                        "future-perfect-continuous-option": "will have been flying"
+                        },
+                        {
+                        "text": "By the time you wake up, I _____ all the chores around the house.",
                         "correctTense": "future-perfect",
-                        "correctAnswer": "will have started",
-                        "explanation": "This action will be completed by a specific time in the future."
-                    }
+                        "correctAnswer": "will have finished",
+                        "explanation": "This action will be completed before another future action.",
+                        "past-simple-option": "finished",
+                        "past-continuous-option": "was finishing",
+                        "past-perfect-option": "had finished",
+                        "past-perfect-continuous-option": "had been finishing",
+                        "present-simple-option": "finish",
+                        "present-continuous-option": "am finishing",
+                        "present-perfect-option": "have finished",
+                        "present-perfect-continuous-option": "have been finishing",
+                        "future-simple-option": "will finish",
+                        "future-continuous-option": "will be finishing",
+                        "future-perfect-option": "will have finished",
+                        "future-perfect-continuous-option": "will have been finishing"
+                        },
+                        {
+                        "text": "At the moment, he _____ a speech to a large audience in the conference hall.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "is giving",
+                        "explanation": "This describes an action happening right now.",
+                        "past-simple-option": "gave",
+                        "past-continuous-option": "was giving",
+                        "past-perfect-option": "had given",
+                        "past-perfect-continuous-option": "had been giving",
+                        "present-simple-option": "gives",
+                        "present-continuous-option": "is giving",
+                        "present-perfect-option": "has given",
+                        "present-perfect-continuous-option": "has been giving",
+                        "future-simple-option": "will give",
+                        "future-continuous-option": "will be giving",
+                        "future-perfect-option": "will have given",
+                        "future-perfect-continuous-option": "will have been giving"
+                        },
+                        {
+                        "text": "For years, my grandparents _____ in this cottage, enjoying the peace and quiet.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have lived",
+                        "explanation": "This refers to an action that began in the past and continues to the present.",
+                        "past-simple-option": "lived",
+                        "past-continuous-option": "were living",
+                        "past-perfect-option": "had lived",
+                        "past-perfect-continuous-option": "had been living",
+                        "present-simple-option": "live",
+                        "present-continuous-option": "are living",
+                        "present-perfect-option": "have lived",
+                        "present-perfect-continuous-option": "have been living",
+                        "future-simple-option": "will live",
+                        "future-continuous-option": "will be living",
+                        "future-perfect-option": "will have lived",
+                        "future-perfect-continuous-option": "will have been living"
+                        },
+                        {
+                        "text": "He _____ his leg while skiing last winter, so he couldn’t walk for weeks.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "broke",
+                        "explanation": "This is a completed action that happened at a specific time in the past.",
+                        "past-simple-option": "broke",
+                        "past-continuous-option": "was breaking",
+                        "past-perfect-option": "had broken",
+                        "past-perfect-continuous-option": "had been breaking",
+                        "present-simple-option": "breaks",
+                        "present-continuous-option": "is breaking",
+                        "present-perfect-option": "has broken",
+                        "present-perfect-continuous-option": "has been breaking",
+                        "future-simple-option": "will break",
+                        "future-continuous-option": "will be breaking",
+                        "future-perfect-option": "will have broken",
+                        "future-perfect-continuous-option": "will have been breaking"
+                        },
+                        {
+                        "text": "She _____ the book all morning, and now she finally understands the plot.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been reading",
+                        "explanation": "This describes a continuous action that started in the past and just recently finished or is still ongoing.",
+                        "past-simple-option": "read",
+                        "past-continuous-option": "was reading",
+                        "past-perfect-option": "had read",
+                        "past-perfect-continuous-option": "had been reading",
+                        "present-simple-option": "reads",
+                        "present-continuous-option": "is reading",
+                        "present-perfect-option": "has read",
+                        "present-perfect-continuous-option": "has been reading",
+                        "future-simple-option": "will read",
+                        "future-continuous-option": "will be reading",
+                        "future-perfect-option": "will have read",
+                        "future-perfect-continuous-option": "will have been reading"
+                        },
+                        {
+                        "text": "When I saw her at the cafe, she _____ to someone on the phone.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was talking",
+                        "explanation": "This describes an action that was in progress at a specific time in the past.",
+                        "past-simple-option": "talked",
+                        "past-continuous-option": "was talking",
+                        "past-perfect-option": "had talked",
+                        "past-perfect-continuous-option": "had been talking",
+                        "present-simple-option": "talks",
+                        "present-continuous-option": "is talking",
+                        "present-perfect-option": "has talked",
+                        "present-perfect-continuous-option": "has been talking",
+                        "future-simple-option": "will talk",
+                        "future-continuous-option": "will be talking",
+                        "future-perfect-option": "will have talked",
+                        "future-perfect-continuous-option": "will have been talking"
+                        },
+                        {
+                        "text": "We _____ to Paris three times before deciding to move there permanently.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had traveled",
+                        "explanation": "This action was completed before another past decision.",
+                        "past-simple-option": "traveled",
+                        "past-continuous-option": "were traveling",
+                        "past-perfect-option": "had traveled",
+                        "past-perfect-continuous-option": "had been traveling",
+                        "present-simple-option": "travel",
+                        "present-continuous-option": "are traveling",
+                        "present-perfect-option": "have traveled",
+                        "present-perfect-continuous-option": "have been traveling",
+                        "future-simple-option": "will travel",
+                        "future-continuous-option": "will be traveling",
+                        "future-perfect-option": "will have traveled",
+                        "future-perfect-continuous-option": "will have been traveling"
+                        },
+                        {
+                        "text": "I think it _____ by the time we get to the station, so bring an umbrella.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have started raining",
+                        "explanation": "This indicates something will have already started by a future point.",
+                        "past-simple-option": "started raining",
+                        "past-continuous-option": "was starting to rain",
+                        "past-perfect-option": "had started raining",
+                        "past-perfect-continuous-option": "had been raining",
+                        "present-simple-option": "starts raining",
+                        "present-continuous-option": "is starting to rain",
+                        "present-perfect-option": "has started raining",
+                        "present-perfect-continuous-option": "has been raining",
+                        "future-simple-option": "will start raining",
+                        "future-continuous-option": "will be starting to rain",
+                        "future-perfect-option": "will have started raining",
+                        "future-perfect-continuous-option": "will have been raining"
+                        },
+                        {
+                        "text": "While I _____ dinner last night, the power went out. We had to eat by candlelight.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was cooking",
+                        "explanation": "This describes an action that was in progress when another action interrupted it in the past.",
+                        "past-simple-option": "cooked",
+                        "past-continuous-option": "was cooking",
+                        "past-perfect-option": "had cooked",
+                        "past-perfect-continuous-option": "had been cooking",
+                        "present-simple-option": "cooks",
+                        "present-continuous-option": "is cooking",
+                        "present-perfect-option": "has cooked",
+                        "present-perfect-continuous-option": "has been cooking",
+                        "future-simple-option": "will cook",
+                        "future-continuous-option": "will be cooking",
+                        "future-perfect-option": "will have cooked",
+                        "future-perfect-continuous-option": "will have been cooking"
+                    },
+                    {
+                        "text": "They _____ each other since they were children. They grew up in the same neighborhood.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have known",
+                        "explanation": "This describes a state or action that started in the past and continues to the present.",
+                        "past-simple-option": "knew",
+                        "past-continuous-option": "were knowing",
+                        "past-perfect-option": "had known",
+                        "past-perfect-continuous-option": "had been knowing",
+                        "present-simple-option": "know",
+                        "present-continuous-option": "are knowing",
+                        "present-perfect-option": "have known",
+                        "present-perfect-continuous-option": "have been knowing",
+                        "future-simple-option": "will know",
+                        "future-continuous-option": "will be knowing",
+                        "future-perfect-option": "will have known",
+                        "future-perfect-continuous-option": "will have been knowing"
+                    },
+                    {
+                        "text": "By the end of next year, she _____ her PhD. She has been working on it diligently.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have completed",
+                        "explanation": "This describes an action that will be finished before a specific time in the future.",
+                        "past-simple-option": "completed",
+                        "past-continuous-option": "was completing",
+                        "past-perfect-option": "had completed",
+                        "past-perfect-continuous-option": "had been completing",
+                        "present-simple-option": "completes",
+                        "present-continuous-option": "is completing",
+                        "present-perfect-option": "has completed",
+                        "present-perfect-continuous-option": "has been completing",
+                        "future-simple-option": "will complete",
+                        "future-continuous-option": "will be completing",
+                        "future-perfect-option": "will have completed",
+                        "future-perfect-continuous-option": "will have been completing"
+                    },
+                    {
+                        "text": "He usually _____ coffee in the morning, but today he opted for tea. He wasn't feeling well.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "drinks",
+                        "explanation": "This describes a habitual or routine action in the present.",
+                        "past-simple-option": "drank",
+                        "past-continuous-option": "was drinking",
+                        "past-perfect-option": "had drunk",
+                        "past-perfect-continuous-option": "had been drinking",
+                        "present-simple-option": "drinks",
+                        "present-continuous-option": "is drinking",
+                        "present-perfect-option": "has drunk",
+                        "present-perfect-continuous-option": "has been drinking",
+                        "future-simple-option": "will drink",
+                        "future-continuous-option": "will be drinking",
+                        "future-perfect-option": "will have drunk",
+                        "future-perfect-continuous-option": "will have been drinking"
+                    },
+                    {
+                        "text": "They _____ for hours before they finally reached the summit. The climb was very challenging.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been hiking",
+                        "explanation": "This describes an ongoing action that continued up to a specific time in the past, emphasizing the duration.",
+                        "past-simple-option": "hiked",
+                        "past-continuous-option": "were hiking",
+                        "past-perfect-option": "had hiked",
+                        "past-perfect-continuous-option": "had been hiking",
+                        "present-simple-option": "hike",
+                        "present-continuous-option": "are hiking",
+                        "present-perfect-option": "have hiked",
+                        "present-perfect-continuous-option": "have been hiking",
+                        "future-simple-option": "will hike",
+                        "future-continuous-option": "will be hiking",
+                        "future-perfect-option": "will have hiked",
+                        "future-perfect-continuous-option": "will have been hiking"
+                    },
+                    {
+                        "text": "She _____ a new language at the moment. She hopes to travel abroad next year.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "is learning",
+                        "explanation": "This describes an action that is happening now or around the present time.",
+                        "past-simple-option": "learned",
+                        "past-continuous-option": "was learning",
+                        "past-perfect-option": "had learned",
+                        "past-perfect-continuous-option": "had been learning",
+                        "present-simple-option": "learns",
+                        "present-continuous-option": "is learning",
+                        "present-perfect-option": "has learned",
+                        "present-perfect-continuous-option": "has been learning",
+                        "future-simple-option": "will learn",
+                        "future-continuous-option": "will be learning",
+                        "future-perfect-option": "will have learned",
+                        "future-perfect-continuous-option": "will have been learning"
+                    },
+                    {
+                        "text": "By the time the movie starts, we _____ all the popcorn. We arrived at the cinema early.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have eaten",
+                        "explanation": "This describes an action that will be completed before a specific point in the future.",
+                        "past-simple-option": "ate",
+                        "past-continuous-option": "were eating",
+                        "past-perfect-option": "had eaten",
+                        "past-perfect-continuous-option": "had been eating",
+                        "present-simple-option": "eat",
+                        "present-continuous-option": "are eating",
+                        "present-perfect-option": "have eaten",
+                        "present-perfect-continuous-option": "have been eating",
+                        "future-simple-option": "will eat",
+                        "future-continuous-option": "will be eating",
+                        "future-perfect-option": "will have eaten",
+                        "future-perfect-continuous-option": "will have been eating"
+                    },
+                    {
+                        "text": "He _____ his phone while he was walking down the street. He had to buy a new one.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "dropped",
+                        "explanation": "This is a completed action that happened at a specific time in the past.",
+                        "past-simple-option": "dropped",
+                        "past-continuous-option": "was dropping",
+                        "past-perfect-option": "had dropped",
+                        "past-perfect-continuous-option": "had been dropping",
+                        "present-simple-option": "drops",
+                        "present-continuous-option": "is dropping",
+                        "present-perfect-option": "has dropped",
+                        "present-perfect-continuous-option": "has been dropping",
+                        "future-simple-option": "will drop",
+                        "future-continuous-option": "will be dropping",
+                        "future-perfect-option": "will have dropped",
+                        "future-perfect-continuous-option": "will have been dropping"
+                    },
+                    {
+                        "text": "They _____ in this city for over ten years. They are very familiar with the local culture.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "have been living",
+                        "explanation": "This describes an action that started in the past and continues to the present, emphasizing the duration.",
+                        "past-simple-option": "lived",
+                        "past-continuous-option": "were living",
+                        "past-perfect-option": "had lived",
+                        "past-perfect-continuous-option": "had been living",
+                        "present-simple-option": "live",
+                        "present-continuous-option": "are living",
+                        "present-perfect-option": "have lived",
+                        "present-perfect-continuous-option": "have been living",
+                        "future-simple-option": "will live",
+                        "future-continuous-option": "will be living",
+                        "future-perfect-option": "will have lived",
+                        "future-perfect-continuous-option": "will have been living"
+                    },
+                    {
+                        "text": "By the time she finishes her degree, she _____ studying for almost five years. It's been a long journey.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been studying",
+                        "explanation": "This describes an ongoing action that will continue up to a specific point in the future, emphasizing the duration.",
+                        "past-simple-option": "studied",
+                        "past-continuous-option": "was studying",
+                        "past-perfect-option": "had studied",
+                        "past-perfect-continuous-option": "had been studying",
+                        "present-simple-option": "studies",
+                        "present-continuous-option": "is studying",
+                        "present-perfect-option": "has studied",
+                        "present-perfect-continuous-option": "has been studying",
+                        "future-simple-option": "will study",
+                        "future-continuous-option": "will be studying",
+                        "future-perfect-option": "will have studied",
+                        "future-perfect-continuous-option": "will have been studying"
+                    },
+                    {
+                        "text": "He _____ the same route to work every day. It's the fastest way to get there.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "takes",
+                        "explanation": "This describes a regular, habitual action in the present.",
+                        "past-simple-option": "took",
+                        "past-continuous-option": "was taking",
+                        "past-perfect-option": "had taken",
+                        "past-perfect-continuous-option": "had been taking",
+                        "present-simple-option": "takes",
+                        "present-continuous-option": "is taking",
+                        "present-perfect-option": "has taken",
+                        "present-perfect-continuous-option": "has been taking",
+                        "future-simple-option": "will take",
+                        "future-continuous-option": "will be taking",
+                        "future-perfect-option": "will have taken",
+                        "future-perfect-continuous-option": "will have been taking"
+                    },
+                    {
+                        "text": "The rain _____ heavily all morning. The streets are still wet.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been raining",
+                        "explanation": "This describes an ongoing action that continued up to a specific time in the past, and its result is still evident.",
+                        "past-simple-option": "rained",
+                        "past-continuous-option": "was raining",
+                        "past-perfect-option": "had rained",
+                        "past-perfect-continuous-option": "had been raining",
+                        "present-simple-option": "rains",
+                        "present-continuous-option": "is raining",
+                        "present-perfect-option": "has rained",
+                        "present-perfect-continuous-option": "has been raining",
+                        "future-simple-option": "will rain",
+                        "future-continuous-option": "will be raining",
+                        "future-perfect-option": "will have rained",
+                        "future-perfect-continuous-option": "will have been raining"
+                    },
+                    {
+                        "text": "They _____ to the new restaurant next week. They are excited to try the food.",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will go",
+                        "explanation": "This is a planned action or intention for the future.",
+                        "past-simple-option": "went",
+                        "past-continuous-option": "were going",
+                        "past-perfect-option": "had gone",
+                        "past-perfect-continuous-option": "had been going",
+                        "present-simple-option": "go",
+                        "present-continuous-option": "are going",
+                        "present-perfect-option": "have gone",
+                        "present-perfect-continuous-option": "have been going",
+                        "future-simple-option": "will go",
+                        "future-continuous-option": "will be going",
+                        "future-perfect-option": "will have gone",
+                        "future-perfect-continuous-option": "will have been going"
+                    },
+                    {
+                        "text": "She _____ a letter when the doorbell rang. It was a surprise delivery.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was writing",
+                        "explanation": "This describes an action that was in progress when another action interrupted it in the past.",
+                        "past-simple-option": "wrote",
+                        "past-continuous-option": "was writing",
+                        "past-perfect-option": "had written",
+                        "past-perfect-continuous-option": "had been writing",
+                        "present-simple-option": "writes",
+                        "present-continuous-option": "is writing",
+                        "present-perfect-option": "has written",
+                        "present-perfect-continuous-option": "has been writing",
+                        "future-simple-option": "will write",
+                        "future-continuous-option": "will be writing",
+                        "future-perfect-option": "will have written",
+                        "future-perfect-continuous-option": "will have been writing"
+                    },
+                    {
+                        "text": "I _____ this movie before, so I know how it ends. It's one of my favorites.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have seen",
+                        "explanation": "This describes an action that happened at an unspecified time in the past, and it has a connection to the present.",
+                        "past-simple-option": "saw",
+                        "past-continuous-option": "was seeing",
+                        "past-perfect-option": "had seen",
+                        "past-perfect-continuous-option": "had been seeing",
+                        "present-simple-option": "see",
+                        "present-continuous-option": "am seeing",
+                        "present-perfect-option": "have seen",
+                        "present-perfect-continuous-option": "have been seeing",
+                        "future-simple-option": "will see",
+                        "future-continuous-option": "will be seeing",
+                        "future-perfect-option": "will have seen",
+                        "future-perfect-continuous-option": "will have been seeing"
+                    },
+                    {
+                        "text": "When I saw Tom last night, he _____ a book in the living room. He seemed completely absorbed in it.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was reading",
+                        "explanation": "This describes an action that was in progress at a specific moment in the past.",
+                        "past-simple-option": "read",
+                        "past-continuous-option": "was reading",
+                        "past-perfect-option": "had read",
+                        "past-perfect-continuous-option": "had been reading",
+                        "present-simple-option": "reads",
+                        "present-continuous-option": "is reading",
+                        "present-perfect-option": "has read",
+                        "present-perfect-continuous-option": "has been reading",
+                        "future-simple-option": "will read",
+                        "future-continuous-option": "will be reading",
+                        "future-perfect-option": "will have read",
+                        "future-perfect-continuous-option": "will have been reading"
+                    },
+                    {
+                        "text": "By the end of this year, Maria _____ her novel. She’s been working on it for months.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have finished",
+                        "explanation": "This describes an action that will be completed before a specific point in the future.",
+                        "past-simple-option": "finished",
+                        "past-continuous-option": "was finishing",
+                        "past-perfect-option": "had finished",
+                        "past-perfect-continuous-option": "had been finishing",
+                        "present-simple-option": "finishes",
+                        "present-continuous-option": "is finishing",
+                        "present-perfect-option": "has finished",
+                        "present-perfect-continuous-option": "has been finishing",
+                        "future-simple-option": "will finish",
+                        "future-continuous-option": "will be finishing",
+                        "future-perfect-option": "will have finished",
+                        "future-perfect-continuous-option": "will have been finishing"
+                    },
+                    {
+                        "text": "Every morning, John _____ his dog for a walk in the park. It’s part of his daily routine.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "takes",
+                        "explanation": "This describes a regular, habitual action in the present.",
+                        "past-simple-option": "took",
+                        "past-continuous-option": "was taking",
+                        "past-perfect-option": "had taken",
+                        "past-perfect-continuous-option": "had been taking",
+                        "present-simple-option": "takes",
+                        "present-continuous-option": "is taking",
+                        "present-perfect-option": "has taken",
+                        "present-perfect-continuous-option": "has been taking",
+                        "future-simple-option": "will take",
+                        "future-continuous-option": "will be taking",
+                        "future-perfect-option": "will have taken",
+                        "future-perfect-continuous-option": "will have been taken"
+                    },
+                    {
+                        "text": "When I woke up this morning, the sun _____ brightly, and the birds were singing.",
+                        "correctTense": "past-simple",
+                        "correctAnswer": "shone",
+                        "explanation": "This describes a completed action in the past.",
+                        "past-simple-option": "shone",
+                        "past-continuous-option": "was shining",
+                        "past-perfect-option": "had shone",
+                        "past-perfect-continuous-option": "had been shining",
+                        "present-simple-option": "shines",
+                        "present-continuous-option": "is shining",
+                        "present-perfect-option": "has shone",
+                        "present-perfect-continuous-option": "has been shining",
+                        "future-simple-option": "will shine",
+                        "future-continuous-option": "will be shining",
+                        "future-perfect-option": "will have shone",
+                        "future-perfect-continuous-option": "will have been shining"
+                        },
+                        {
+                        "text": "By the end of this year, she _____ Spanish for five years, and she plans to take an advanced course.",
+                        "correctTense": "future-perfect",
+                        "correctAnswer": "will have studied",
+                        "explanation": "This describes an action that will be completed before a specific future time.",
+                        "past-simple-option": "studied",
+                        "past-continuous-option": "was studying",
+                        "past-perfect-option": "had studied",
+                        "past-perfect-continuous-option": "had been studying",
+                        "present-simple-option": "studies",
+                        "present-continuous-option": "is studying",
+                        "present-perfect-option": "has studied",
+                        "present-perfect-continuous-option": "has been studying",
+                        "future-simple-option": "will study",
+                        "future-continuous-option": "will be studying",
+                        "future-perfect-option": "will have studied",
+                        "future-perfect-continuous-option": "will have been studying"
+                        },
+                        {
+                        "text": "Right now, the children _____ outside, laughing and playing in the snow.",
+                        "correctTense": "present-continuous",
+                        "correctAnswer": "are playing",
+                        "explanation": "This describes an action happening at the present moment.",
+                        "past-simple-option": "played",
+                        "past-continuous-option": "were playing",
+                        "past-perfect-option": "had played",
+                        "past-perfect-continuous-option": "had been playing",
+                        "present-simple-option": "play",
+                        "present-continuous-option": "are playing",
+                        "present-perfect-option": "have played",
+                        "present-perfect-continuous-option": "have been playing",
+                        "future-simple-option": "will play",
+                        "future-continuous-option": "will be playing",
+                        "future-perfect-option": "will have played",
+                        "future-perfect-continuous-option": "will have been playing"
+                        },
+                        {
+                        "text": "He _____ his phone twice this week, so he’s going to buy a more durable case.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has dropped",
+                        "explanation": "This refers to an action that happened at an unspecified time before now.",
+                        "past-simple-option": "dropped",
+                        "past-continuous-option": "was dropping",
+                        "past-perfect-option": "had dropped",
+                        "past-perfect-continuous-option": "had been dropping",
+                        "present-simple-option": "drops",
+                        "present-continuous-option": "is dropping",
+                        "present-perfect-option": "has dropped",
+                        "present-perfect-continuous-option": "has been dropping",
+                        "future-simple-option": "will drop",
+                        "future-continuous-option": "will be dropping",
+                        "future-perfect-option": "will have dropped",
+                        "future-perfect-continuous-option": "will have been dropping"
+                        },
+                        {
+                        "text": "While I _____ dinner last night, my friend called and invited me to a party.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was cooking",
+                        "explanation": "This describes an ongoing action interrupted by another event in the past.",
+                        "past-simple-option": "cooked",
+                        "past-continuous-option": "was cooking",
+                        "past-perfect-option": "had cooked",
+                        "past-perfect-continuous-option": "had been cooking",
+                        "present-simple-option": "cook",
+                        "present-continuous-option": "am cooking",
+                        "present-perfect-option": "have cooked",
+                        "present-perfect-continuous-option": "have been cooking",
+                        "future-simple-option": "will cook",
+                        "future-continuous-option": "will be cooking",
+                        "future-perfect-option": "will have cooked",
+                        "future-perfect-continuous-option": "will have been cooking"
+                        },
+                        {
+                        "text": "By the time we reached the cinema, the movie _____, so we had to wait for the next showing.",
+                        "correctTense": "past-perfect",
+                        "correctAnswer": "had started",
+                        "explanation": "This indicates an action completed before another past action.",
+                        "past-simple-option": "started",
+                        "past-continuous-option": "was starting",
+                        "past-perfect-option": "had started",
+                        "past-perfect-continuous-option": "had been starting",
+                        "present-simple-option": "starts",
+                        "present-continuous-option": "is starting",
+                        "present-perfect-option": "has started",
+                        "present-perfect-continuous-option": "has been starting",
+                        "future-simple-option": "will start",
+                        "future-continuous-option": "will be starting",
+                        "future-perfect-option": "will have started",
+                        "future-perfect-continuous-option": "will have been starting"
+                        },
+                        {
+                        "text": "She _____ in London since 2020, but she’s moving back to New York next month.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been living",
+                        "explanation": "This describes an ongoing action that started in the past and continues to the present.",
+                        "past-simple-option": "lived",
+                        "past-continuous-option": "was living",
+                        "past-perfect-option": "had lived",
+                        "past-perfect-continuous-option": "had been living",
+                        "present-simple-option": "lives",
+                        "present-continuous-option": "is living",
+                        "present-perfect-option": "has lived",
+                        "present-perfect-continuous-option": "has been living",
+                        "future-simple-option": "will live",
+                        "future-continuous-option": "will be living",
+                        "future-perfect-option": "will have lived",
+                        "future-perfect-continuous-option": "will have been living"
+                        },
+                        {
+                        "text": "If you don’t hurry, the train _____ before we even get to the station!",
+                        "correctTense": "future-simple",
+                        "correctAnswer": "will leave",
+                        "explanation": "This is a prediction about a future event.",
+                        "past-simple-option": "left",
+                        "past-continuous-option": "was leaving",
+                        "past-perfect-option": "had left",
+                        "past-perfect-continuous-option": "had been leaving",
+                        "present-simple-option": "leaves",
+                        "present-continuous-option": "is leaving",
+                        "present-perfect-option": "has left",
+                        "present-perfect-continuous-option": "has been leaving",
+                        "future-simple-option": "will leave",
+                        "future-continuous-option": "will be leaving",
+                        "future-perfect-option": "will have left",
+                        "future-perfect-continuous-option": "will have been leaving"
+                        },
+                        {
+                        "text": "The scientists _____ the experiment for months before they finally got accurate results.",
+                        "correctTense": "past-perfect-continuous",
+                        "correctAnswer": "had been conducting",
+                        "explanation": "This describes a prolonged action that happened before another past event.",
+                        "past-simple-option": "conducted",
+                        "past-continuous-option": "were conducting",
+                        "past-perfect-option": "had conducted",
+                        "past-perfect-continuous-option": "had been conducting",
+                        "present-simple-option": "conduct",
+                        "present-continuous-option": "are conducting",
+                        "present-perfect-option": "have conducted",
+                        "present-perfect-continuous-option": "have been conducting",
+                        "future-simple-option": "will conduct",
+                        "future-continuous-option": "will be conducting",
+                        "future-perfect-option": "will have conducted",
+                        "future-perfect-continuous-option": "will have been conducting"
+                        },
+                        {
+                        "text": "Every morning, he _____ at 6 AM, drinks coffee, and reads the news before work.",
+                        "correctTense": "present-simple",
+                        "correctAnswer": "wakes up",
+                        "explanation": "This describes a habitual action in the present.",
+                        "past-simple-option": "woke up",
+                        "past-continuous-option": "was waking up",
+                        "past-perfect-option": "had woken up",
+                        "past-perfect-continuous-option": "had been waking up",
+                        "present-simple-option": "wakes up",
+                        "present-continuous-option": "is waking up",
+                        "present-perfect-option": "has woken up",
+                        "present-perfect-continuous-option": "has been waking up",
+                        "future-simple-option": "will wake up",
+                        "future-continuous-option": "will be waking up",
+                        "future-perfect-option": "will have woken up",
+                        "future-perfect-continuous-option": "will have been waking up"
+                        },
+                        {
+                        "text": "By next summer, they _____ their new house for a full decade.",
+                        "correctTense": "future-perfect-continuous",
+                        "correctAnswer": "will have been owning",
+                        "explanation": "This emphasizes the duration of an action leading up to a future point.",
+                        "past-simple-option": "owned",
+                        "past-continuous-option": "were owning",
+                        "past-perfect-option": "had owned",
+                        "past-perfect-continuous-option": "had been owning",
+                        "present-simple-option": "own",
+                        "present-continuous-option": "are owning",
+                        "present-perfect-option": "have owned",
+                        "present-perfect-continuous-option": "have been owning",
+                        "future-simple-option": "will own",
+                        "future-continuous-option": "will be owning",
+                        "future-perfect-option": "will have owned",
+                        "future-perfect-continuous-option": "will have been owning"
+                        },
+                        {
+                        "text": "The chef _____ the cake when suddenly the oven stopped working.",
+                        "correctTense": "past-continuous",
+                        "correctAnswer": "was baking",
+                        "explanation": "This describes an action in progress when another event occurred.",
+                        "past-simple-option": "baked",
+                        "past-continuous-option": "was baking",
+                        "past-perfect-option": "had baked",
+                        "past-perfect-continuous-option": "had been baking",
+                        "present-simple-option": "bakes",
+                        "present-continuous-option": "is baking",
+                        "present-perfect-option": "has baked",
+                        "present-perfect-continuous-option": "has been baking",
+                        "future-simple-option": "will bake",
+                        "future-continuous-option": "will be baking",
+                        "future-perfect-option": "will have baked",
+                        "future-perfect-continuous-option": "will have been baking"
+                        },
+                        {
+                        "text": "I _____ three books this month, and I’m planning to read two more.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "have read",
+                        "explanation": "This refers to life experiences up to now.",
+                        "past-simple-option": "read",
+                        "past-continuous-option": "was reading",
+                        "past-perfect-option": "had read",
+                        "past-perfect-continuous-option": "had been reading",
+                        "present-simple-option": "read",
+                        "present-continuous-option": "am reading",
+                        "present-perfect-option": "have read",
+                        "present-perfect-continuous-option": "have been reading",
+                        "future-simple-option": "will read",
+                        "future-continuous-option": "will be reading",
+                        "future-perfect-option": "will have read",
+                        "future-perfect-continuous-option": "will have been reading"
+                        },
+                        {
+                        "text": "After she _____ her degree, she will apply for jobs in marketing.",
+                        "correctTense": "present-perfect",
+                        "correctAnswer": "has completed",
+                        "explanation": "This indicates an action that will be finished before a future event.",
+                        "past-simple-option": "completed",
+                        "past-continuous-option": "was completing",
+                        "past-perfect-option": "had completed",
+                        "past-perfect-continuous-option": "had been completing",
+                        "present-simple-option": "completes",
+                        "present-continuous-option": "is completing",
+                        "present-perfect-option": "has completed",
+                        "present-perfect-continuous-option": "has been completing",
+                        "future-simple-option": "will complete",
+                        "future-continuous-option": "will be completing",
+                        "future-perfect-option": "will have completed",
+                        "future-perfect-continuous-option": "will have been completing"
+                        },
+                        {
+                        "text": "The team _____ on this project for weeks, and they still haven’t found a solution.",
+                        "correctTense": "present-perfect-continuous",
+                        "correctAnswer": "has been working",
+                        "explanation": "This describes an ongoing action with present relevance.",
+                        "past-simple-option": "worked",
+                        "past-continuous-option": "were working",
+                        "past-perfect-option": "had worked",
+                        "past-perfect-continuous-option": "had been working",
+                        "present-simple-option": "works",
+                        "present-continuous-option": "are working",
+                        "present-perfect-option": "has worked",
+                        "present-perfect-continuous-option": "has been working",
+                        "future-simple-option": "will work",
+                        "future-continuous-option": "will be working",
+                        "future-perfect-option": "will have worked",
+                        "future-perfect-continuous-option": "will have been working"
+                        }
                 ]
             };
             
@@ -1145,21 +2486,18 @@
             // Local Storage Keys
             const STORAGE_KEY = 'tenseQuestProgress';
             
-            // Flag to track if a card is currently flipped
-            let isCardFlipped = false;
-            
             // Initialize card flipping
             gameCards.forEach(card => {
                 card.addEventListener('click', () => {
-                    // If feedback is showing or another card is already flipped, don't allow flipping
-                    if (!feedbackEl.classList.contains('hidden') || isCardFlipped) {
+                    // If feedback is showing or a card is already selected, don't allow selection
+                    if (!feedbackEl.classList.contains('hidden') || gameState.selectedCard) {
                         return;
                     }
                     
-                    // Set the flag to prevent other cards from flipping
-                    isCardFlipped = true;
+                    // Store the selected card
+                    gameState.selectedCard = card;
                     
-                    // Add disabled class to all cards
+                    // Add disabled class to all other cards
                     gameCards.forEach(c => {
                         if (c !== card) {
                             c.classList.add('disabled');
@@ -1172,16 +2510,7 @@
                     // Check answer after a delay
                     setTimeout(() => {
                         checkAnswer(card.dataset.tense);
-                        card.classList.remove('flipped');
-                        
-                        // Reset the flag and remove disabled class from all cards
-                        setTimeout(() => {
-                            isCardFlipped = false;
-                            gameCards.forEach(c => {
-                                c.classList.remove('disabled');
-                            });
-                        }, 300); // Small delay after flip back
-                    }, 1500);
+                    }, 500);
                 });
             });
             
@@ -1199,6 +2528,10 @@
             function startGame() {
                 startScreen.classList.add('hidden');
                 gameScreen.classList.remove('hidden');
+                
+                // Shuffle scenarios
+                gameState.scenarios.sort(() => Math.random() - 0.5);
+                
                 loadQuestion();
             }
             
@@ -1209,8 +2542,35 @@
                 progressBar.style.width = `${(gameState.currentLevel / gameState.maxLevels) * 100}%`;
                 feedbackEl.classList.add('hidden');
                 
+                // Reset all cards
+                gameCards.forEach(card => {
+                    card.classList.remove('flipped', 'disabled');
+                });
+                
+                // Reset selected card
+                gameState.selectedCard = null;
+                
+                // Update the verb forms on all cards based on the current scenario
+                updateVerbForms(scenario);
+                
                 // Save progress
                 saveProgress();
+            }
+            
+            function updateVerbForms(scenario) {
+                // Update each card with the appropriate verb form from the scenario
+                const tenses = [
+                    'past-simple', 'past-continuous', 'past-perfect', 'past-perfect-continuous',
+                    'present-simple', 'present-continuous', 'present-perfect', 'present-perfect-continuous',
+                    'future-simple', 'future-continuous', 'future-perfect', 'future-perfect-continuous'
+                ];
+                
+                tenses.forEach(tense => {
+                    const formElement = document.getElementById(`${tense}-form`);
+                    if (formElement && scenario[`${tense}-option`]) {
+                        formElement.textContent = scenario[`${tense}-option`];
+                    }
+                });
             }
             
             function checkAnswer(selectedTense) {
@@ -1327,6 +2687,7 @@
                 gameState.currentLevel = 0;
                 gameState.score = 0;
                 gameState.correctAnswers = 0;
+                gameState.selectedCard = null;
                 
                 for (const tense in gameState.tenseMastery) {
                     gameState.tenseMastery[tense] = 0;
@@ -1365,6 +2726,7 @@
                     gameState.currentLevel = 0;
                     gameState.score = 0;
                     gameState.correctAnswers = 0;
+                    gameState.selectedCard = null;
                     
                     for (const tense in gameState.tenseMastery) {
                         gameState.tenseMastery[tense] = 0;
@@ -1457,5 +2819,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cf5f5835ce4a1c',t:'MTc0Njc3NDU3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d0a90a35c68464',t:'MTc0Njc4ODA4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
