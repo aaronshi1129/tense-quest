@@ -123,9 +123,41 @@
             font-size: 1.1rem;
             margin-top: 0.5rem;
         }
+        .sound-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .sound-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .sound-btn.muted .sound-on {
+            display: none;
+        }
+        
+        .sound-btn:not(.muted) .sound-off {
+            display: none;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 0.5s;
+        }
     </style>
 </head>
 <body class="p-4">
+    <!-- Audio elements for sound effects -->
+    <audio id="correct-sound" preload="auto">
+        <source src="https://app.aaronshi.cc/word-link/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="incorrect-sound" preload="auto">
+        <source src="https://app.aaronshi.cc/word-link/wrong.mp3" type="audio/mpeg">
+    </audio>
     <div id="confetti-container" class="fixed inset-0 pointer-events-none z-50"></div>
     
     <div class="max-w-4xl mx-auto">
@@ -137,6 +169,17 @@
         
         <!-- Game Container -->
         <div class="bg-white rounded-xl shadow-xl p-6 relative overflow-hidden">
+            <!-- Sound Toggle Button -->
+            <button id="sound-toggle" class="sound-btn absolute top-4 right-4 z-10 bg-indigo-100 hover:bg-indigo-200 p-2 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600 sound-on" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600 sound-off" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                </svg>
+            </button>
+            
             <!-- Game States -->
             <div id="start-screen" class="text-center py-10">
                 <div class="mb-8">
@@ -574,6 +617,7 @@
                 score: 0,
                 correctAnswers: 0,
                 selectedCard: null,
+                soundEnabled: true,
                 tenseMastery: {
                     'past-simple': 0,
                     'past-continuous': 0,
@@ -2485,10 +2529,66 @@
             const tenseMasteryEl = document.getElementById('tense-mastery');
             const gameCards = document.querySelectorAll('.game-card');
             const confettiContainer = document.getElementById('confetti-container');
+            const soundToggleBtn = document.getElementById('sound-toggle');
+            const correctSound = document.getElementById('correct-sound');
+            const incorrectSound = document.getElementById('incorrect-sound');
             
             // Local Storage Keys
             const STORAGE_KEY = 'tenseQuestProgress';
+            const SOUND_KEY = 'tenseQuestSound';
+
+           // Sound manager
+            function playSound(sound) {
+                if (gameState.soundEnabled) {
+                    // Reset the sound to the beginning if it's already playing
+                    sound.pause();
+                    sound.currentTime = 0;
+                    
+                    // Play the sound
+                    sound.play().catch(error => {
+                        console.log("Audio play error:", error);
+                    });
+                }
+            }
             
+            // Initialize sound toggle
+            function initSoundToggle() {
+                // Load sound preference from local storage
+                const soundPref = localStorage.getItem(SOUND_KEY);
+                if (soundPref !== null) {
+                    gameState.soundEnabled = soundPref === 'true';
+                }
+                
+                // Update button state
+                updateSoundToggleButton();
+                
+                // Add event listener
+                soundToggleBtn.addEventListener('click', toggleSound);
+            }
+            
+            function toggleSound() {
+                gameState.soundEnabled = !gameState.soundEnabled;
+                updateSoundToggleButton();
+                
+                // Add pulse animation
+                soundToggleBtn.classList.add('pulse');
+                setTimeout(() => {
+                    soundToggleBtn.classList.remove('pulse');
+                }, 500);
+                
+                // Save preference
+                localStorage.setItem(SOUND_KEY, gameState.soundEnabled);
+            }
+            
+            function updateSoundToggleButton() {
+                if (gameState.soundEnabled) {
+                    soundToggleBtn.classList.remove('muted');
+                    soundToggleBtn.title = "Mute Sound";
+                } else {
+                    soundToggleBtn.classList.add('muted');
+                    soundToggleBtn.title = "Enable Sound";
+                }
+            }
             // Initialize card flipping
             gameCards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -2519,6 +2619,9 @@
             
             // Load saved progress
             loadProgress();
+
+            // Initialize sound toggle
+            initSoundToggle();
             
             // Event listeners
             startGameBtn.addEventListener('click', startGame);
@@ -2591,10 +2694,16 @@
                     gameState.tenseMastery[selectedTense]++;
                     scoreEl.textContent = gameState.score;
                     createConfetti();
+                    
+                    // Play correct sound
+                    playSound(correctSound);
                 } else {
                     feedbackEl.className = 'bg-red-100 p-4 rounded-lg mb-6 text-center';
                     feedbackTitleEl.textContent = '❌ Not quite right';
                     feedbackTitleEl.className = 'text-xl font-bold mb-2 text-red-800';
+                    
+                    // Play incorrect sound
+                    playSound(incorrectSound);
                 }
                 
                 feedbackMessageEl.innerHTML = `
